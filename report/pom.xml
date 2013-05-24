@@ -16,6 +16,7 @@
 	</properties>
 
 	<modules>
+		<module>report-core</module>
 		<module>report-web</module>
 	</modules>
 
