@@ -11,7 +11,14 @@
 
 	<groupId>cn.flus.taobao</groupId>
 	<artifactId>report-web</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>${project.all.version}</version>
 	<packaging>war</packaging>
 
+	<dependencies>
+		<dependency>
+			<groupId>cn.flus.taobao</groupId>
+			<artifactId>report-core</artifactId>
+			<version>${project.all.version}</version>
+		</dependency>
+	</dependencies>
 </project>
