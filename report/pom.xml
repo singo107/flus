@@ -198,6 +198,12 @@
 				<artifactId>spring-jms</artifactId>
 				<version>${springframework.version}</version>
 			</dependency>
+			<!-- taobao -->
+			<dependency>
+				<groupId>com.taobao.api</groupId>
+				<artifactId>taobao-sdk-java</artifactId>
+				<version>20130524</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 </project>

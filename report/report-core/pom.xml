@@ -39,5 +39,9 @@
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>com.taobao.api</groupId>
+			<artifactId>taobao-sdk-java</artifactId>
+		</dependency>
 	</dependencies>
 </project>
