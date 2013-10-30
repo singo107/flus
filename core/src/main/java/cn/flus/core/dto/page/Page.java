@@ -1,4 +1,4 @@
-package cn.flus.core.dto;
+package cn.flus.core.dto.page;
 
 import java.io.Serializable;
 

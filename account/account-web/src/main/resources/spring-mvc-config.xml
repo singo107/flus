@@ -7,40 +7,35 @@
          http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd">
 
 	<mvc:resources location="classpath:/resources/" mapping="/resources/**" />
-	<context:property-placeholder location="classpath:*.properties"
+	<context:property-placeholder location="classpath:default.properties"
 		file-encoding="utf-8" />
 	<context:component-scan base-package="cn.flus.account.web.controller" />
 	<mvc:annotation-driven />
 	<mvc:default-servlet-handler />
 
-	<bean
-		class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
-		<property name="order" value="2" />
-		<property name="mediaTypes">
+	<bean id="freemarkerConfiguration"
+		class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="location" value="classpath:freemarker.properties" />
+	</bean>
+	<bean id="freemarkerConfig"
+		class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+		<property name="freemarkerSettings" ref="freemarkerConfiguration" />
+		<property name="templateLoaderPath">
+			<value>/WEB-INF/template/</value>
+		</property>
+		<property name="freemarkerVariables">
 			<map>
-				<entry key="json" value="application/json" />
-				<entry key="text" value="text/plain" />
+				<entry key="xml_escape" value-ref="fmXmlEscape" />
 			</map>
 		</property>
-
-		<property name="defaultViews">
-			<list>
-				<bean
-					class="org.springframework.web.servlet.view.json.MappingJacksonJsonView" />
-				<bean
-					class="org.springframework.web.servlet.view.json.MappingJacksonJsonView">
-					<property name="contentType" value="text/plain" />
-				</bean>
-			</list>
-		</property>
-		<property name="ignoreAcceptHeader" value="false" />
 	</bean>
-
+	<bean id="fmXmlEscape" class="freemarker.template.utility.XmlEscape" />
 	<bean id="viewResolver"
-		class="org.springframework.web.servlet.view.UrlBasedViewResolver">
-		<property name="viewClass"
-			value="org.springframework.web.servlet.view.JstlView" />
-		<property name="prefix" value="/WEB-INF/pages/" />
-		<property name="suffix" value=".jsp" />
+		class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+		<property name="cache" value="true" />
+		<property name="prefix" value="" />
+		<property name="suffix" value=".ftl" />
+		<property name="contentType" value="text/html; charset=utf-8" />
+		<property name="order" value="2" />
 	</bean>
 </beans>  

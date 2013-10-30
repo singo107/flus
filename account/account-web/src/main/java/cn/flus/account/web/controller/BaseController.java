@@ -7,4 +7,6 @@ package cn.flus.account.web.controller;
  */
 public abstract class BaseController {
 
+    protected void getCurrentUser() {
+    }
 }
