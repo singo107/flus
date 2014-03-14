@@ -25,5 +25,6 @@ public class IndexController extends BaseController {
     public ModelAndView index(ModelMap model) {
         model.addAttribute("msg", "Singo Hello world!");
         return new ModelAndView("index");
+
     }
 }
