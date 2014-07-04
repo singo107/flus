@@ -1,11 +1,9 @@
 package cn.flus.account.core.service;
 
-import cn.flus.account.core.entity.AccountUserEntity;
+import cn.flus.account.core.dao.domain.AccountUserEntity;
 
 /**
- * 调用用户
- * 
- * @author zhouxing 2013-5-2
+ * @author zhouxing
  */
 public interface AccountUserService {
 
