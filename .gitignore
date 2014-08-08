@@ -1,0 +1,9 @@
+.project
+.classpath
+.settings
+target
+META-INF
+*.log
+.DS_Store
+Thumbs.db
+/bin
