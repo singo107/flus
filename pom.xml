@@ -18,7 +18,7 @@
 	</properties>
 
 	<modules>
-		<module>core</module>
+		<module>flus-core</module>
 		<module>account</module>
 	</modules>
 
