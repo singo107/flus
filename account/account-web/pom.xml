@@ -49,7 +49,7 @@
 				<configuration>
 					<scanIntervalSeconds>0</scanIntervalSeconds>
 					<webAppConfig>
-						<contextPath>/account</contextPath>
+						<contextPath>/account-web</contextPath>
 					</webAppConfig>
 				</configuration>
 			</plugin>

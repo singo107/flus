@@ -14,7 +14,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>cn.flus</groupId>
-			<artifactId>core</artifactId>
+			<artifactId>flus-core</artifactId>
 			<version>${flus.version}</version>
 		</dependency>
 		<dependency>
