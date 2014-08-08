@@ -4,15 +4,15 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>cn.flus</groupId>
-	<artifactId>parent</artifactId>
+	<artifactId>flus-parent</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
-	<name>flus</name>
-	<description>parent Project</description>
+	<name>flus-parent</name>
+	<description>Flus Parent Project</description>
 
 	<properties>
-		<account.version>0.0.1-SNAPSHOT</account.version>
+		<flus.version>0.0.1-SNAPSHOT</flus.version>
 		<springframework.version>3.2.9.RELEASE</springframework.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -31,7 +31,7 @@
 				<configuration>
 					<target>1.7</target>
 					<source>1.7</source>
-					<encoding>UTF8</encoding>
+					<encoding>${project.build.sourceEncoding}</encoding>
 				</configuration>
 			</plugin>
 		</plugins>
@@ -39,11 +39,6 @@
 
 	<dependencyManagement>
 		<dependencies>
-			<dependency>
-				<groupId>com.glodon.paas.account</groupId>
-				<artifactId>account-core</artifactId>
-				<version>${account.version}</version>
-			</dependency>
 			<!--servlet -->
 			<dependency>
 				<groupId>javax.servlet</groupId>

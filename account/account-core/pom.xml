@@ -8,7 +8,6 @@
 		<artifactId>account</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<groupId>cn.flus</groupId>
 	<artifactId>account-core</artifactId>
 	<packaging>jar</packaging>
 
@@ -16,7 +15,7 @@
 		<dependency>
 			<groupId>cn.flus</groupId>
 			<artifactId>core</artifactId>
-			<version>${account.version}</version>
+			<version>${flus.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-lang</groupId>
@@ -73,6 +72,10 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
 		</dependency>
 		<!-- mysql -->
 		<dependency>

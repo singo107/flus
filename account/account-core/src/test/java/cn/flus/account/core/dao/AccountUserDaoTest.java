@@ -30,7 +30,7 @@ public class AccountUserDaoTest {
     @Test
     public void test() {
         AccountUserEntity entity = new AccountUserEntity();
-        entity.setLoginname("singo107@qq.com");
+        entity.setLoginname("singo1071@qq.com");
         entity.setCreateTime(new Date());
         entity.setStatus(0);
         accountUserDao.insert(entity);
