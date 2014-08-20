@@ -18,11 +18,27 @@ public class AccountUserDaoImpl implements AccountUserDao {
 
     @Override
     public Integer insert(AccountUserEntity entity) {
-        return accountUserEntityMapper.insert(entity);
+        accountUserEntityMapper.insert(entity);
+        return entity.getId();
     }
 
     @Override
     public AccountUserEntity get(Integer id) {
         return accountUserEntityMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public AccountUserEntity getByLoginname(String loginname) {
+        return accountUserEntityMapper.selectByLoginname(loginname);
+    }
+
+    @Override
+    public AccountUserEntity getByEmail(String email) {
+        return accountUserEntityMapper.selectByEmail(email);
+    }
+
+    @Override
+    public AccountUserEntity getByMobile(String mobile) {
+        return accountUserEntityMapper.selectByMobile(mobile);
     }
 }

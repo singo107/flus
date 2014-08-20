@@ -2,9 +2,6 @@ package cn.flus.account.core.dao.domain;
 
 import java.util.Date;
 
-/**
- * @author zhouxing
- */
 public class AccountUserEntity {
 
     private Integer id;
@@ -19,9 +16,29 @@ public class AccountUserEntity {
 
     private String  passwordSalt;
 
-    private String  fullname;
+    private Integer passwordStrength;
 
     private Integer status;
+
+    private Integer level;
+
+    private Integer type;
+
+    private Integer validate;
+
+    private String  nickname;
+
+    private String  gender;
+
+    private Date    birthday;
+
+    private String  source;
+
+    private String  description;
+
+    private String  openId;
+
+    private String  openType;
 
     private Date    createTime;
 
@@ -73,12 +90,12 @@ public class AccountUserEntity {
         this.passwordSalt = passwordSalt;
     }
 
-    public String getFullname() {
-        return fullname;
+    public Integer getPasswordStrength() {
+        return passwordStrength;
     }
 
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
+    public void setPasswordStrength(Integer passwordStrength) {
+        this.passwordStrength = passwordStrength;
     }
 
     public Integer getStatus() {
@@ -87,6 +104,86 @@ public class AccountUserEntity {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Integer getLevel() {
+        return level;
+    }
+
+    public void setLevel(Integer level) {
+        this.level = level;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public Integer getValidate() {
+        return validate;
+    }
+
+    public void setValidate(Integer validate) {
+        this.validate = validate;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getOpenId() {
+        return openId;
+    }
+
+    public void setOpenId(String openId) {
+        this.openId = openId;
+    }
+
+    public String getOpenType() {
+        return openType;
+    }
+
+    public void setOpenType(String openType) {
+        this.openType = openType;
     }
 
     public Date getCreateTime() {

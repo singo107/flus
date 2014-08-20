@@ -10,7 +10,7 @@ import org.springframework.web.servlet.view.RedirectView;
 /**
  * Homepage
  * 
- * @author zhouxing 2013-10-18
+ * @author zhouxing
  */
 @Controller
 @RequestMapping("/")
@@ -23,8 +23,7 @@ public class IndexController extends BaseController {
 
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public ModelAndView index(ModelMap model) {
-        model.addAttribute("msg", "Singo Hello world!");
+        model.addAttribute("msg", "Hello world!");
         return new ModelAndView("index");
-
     }
 }

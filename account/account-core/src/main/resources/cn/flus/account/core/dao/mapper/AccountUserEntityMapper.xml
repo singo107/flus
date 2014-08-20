@@ -8,12 +8,24 @@
     <result column="mobile" property="mobile" jdbcType="VARCHAR" />
     <result column="password" property="password" jdbcType="VARCHAR" />
     <result column="password_salt" property="passwordSalt" jdbcType="VARCHAR" />
-    <result column="fullname" property="fullname" jdbcType="VARCHAR" />
+    <result column="password_strength" property="passwordStrength" jdbcType="INTEGER" />
     <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="level" property="level" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="validate" property="validate" jdbcType="INTEGER" />
+    <result column="nickname" property="nickname" jdbcType="VARCHAR" />
+    <result column="gender" property="gender" jdbcType="CHAR" />
+    <result column="birthday" property="birthday" jdbcType="DATE" />
+    <result column="source" property="source" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="open_id" property="openId" jdbcType="VARCHAR" />
+    <result column="open_type" property="openType" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, loginname, email, mobile, password, password_salt, fullname, status, create_time
+    id, loginname, email, mobile, password, password_salt, password_strength, status, 
+    level, type, validate, nickname, gender, birthday, source, description, open_id, 
+    open_type, create_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -21,19 +33,47 @@
     from account_user
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="selectByLoginname" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from account_user
+    where loginname = #{loginname,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByEmail" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from account_user
+    where email = #{email,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByMobile" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from account_user
+    where mobile = #{mobile,jdbcType=VARCHAR}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from account_user
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="cn.flus.account.core.dao.domain.AccountUserEntity" >
+  	<selectKey resultType="java.lang.Integer" keyProperty="id" >
+      select last_insert_id()
+    </selectKey>
     insert into account_user (id, loginname, email, 
       mobile, password, password_salt, 
-      fullname, status, create_time
-      )
+      password_strength, status, level, 
+      type, validate, nickname, 
+      gender, birthday, source, 
+      description, open_id, open_type, 
+      create_time)
     values (#{id,jdbcType=INTEGER}, #{loginname,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
       #{mobile,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{passwordSalt,jdbcType=VARCHAR}, 
-      #{fullname,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}
-      )
+      #{passwordStrength,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{level,jdbcType=INTEGER}, 
+      #{type,jdbcType=INTEGER}, #{validate,jdbcType=INTEGER}, #{nickname,jdbcType=VARCHAR}, 
+      #{gender,jdbcType=CHAR}, #{birthday,jdbcType=DATE}, #{source,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR}, #{openId,jdbcType=VARCHAR}, #{openType,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP})
+      
   </insert>
   <insert id="insertSelective" parameterType="cn.flus.account.core.dao.domain.AccountUserEntity" >
     insert into account_user
@@ -56,11 +96,41 @@
       <if test="passwordSalt != null" >
         password_salt,
       </if>
-      <if test="fullname != null" >
-        fullname,
+      <if test="passwordStrength != null" >
+        password_strength,
       </if>
       <if test="status != null" >
         status,
+      </if>
+      <if test="level != null" >
+        level,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="validate != null" >
+        validate,
+      </if>
+      <if test="nickname != null" >
+        nickname,
+      </if>
+      <if test="gender != null" >
+        gender,
+      </if>
+      <if test="birthday != null" >
+        birthday,
+      </if>
+      <if test="source != null" >
+        source,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="openId != null" >
+        open_id,
+      </if>
+      <if test="openType != null" >
+        open_type,
       </if>
       <if test="createTime != null" >
         create_time,
@@ -85,11 +155,41 @@
       <if test="passwordSalt != null" >
         #{passwordSalt,jdbcType=VARCHAR},
       </if>
-      <if test="fullname != null" >
-        #{fullname,jdbcType=VARCHAR},
+      <if test="passwordStrength != null" >
+        #{passwordStrength,jdbcType=INTEGER},
       </if>
       <if test="status != null" >
         #{status,jdbcType=INTEGER},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="validate != null" >
+        #{validate,jdbcType=INTEGER},
+      </if>
+      <if test="nickname != null" >
+        #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        #{gender,jdbcType=CHAR},
+      </if>
+      <if test="birthday != null" >
+        #{birthday,jdbcType=DATE},
+      </if>
+      <if test="source != null" >
+        #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="openId != null" >
+        #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="openType != null" >
+        #{openType,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
@@ -114,11 +214,41 @@
       <if test="passwordSalt != null" >
         password_salt = #{passwordSalt,jdbcType=VARCHAR},
       </if>
-      <if test="fullname != null" >
-        fullname = #{fullname,jdbcType=VARCHAR},
+      <if test="passwordStrength != null" >
+        password_strength = #{passwordStrength,jdbcType=INTEGER},
       </if>
       <if test="status != null" >
         status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="level != null" >
+        level = #{level,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="validate != null" >
+        validate = #{validate,jdbcType=INTEGER},
+      </if>
+      <if test="nickname != null" >
+        nickname = #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        gender = #{gender,jdbcType=CHAR},
+      </if>
+      <if test="birthday != null" >
+        birthday = #{birthday,jdbcType=DATE},
+      </if>
+      <if test="source != null" >
+        source = #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="openId != null" >
+        open_id = #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="openType != null" >
+        open_type = #{openType,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -133,8 +263,18 @@
       mobile = #{mobile,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
       password_salt = #{passwordSalt,jdbcType=VARCHAR},
-      fullname = #{fullname,jdbcType=VARCHAR},
+      password_strength = #{passwordStrength,jdbcType=INTEGER},
       status = #{status,jdbcType=INTEGER},
+      level = #{level,jdbcType=INTEGER},
+      type = #{type,jdbcType=INTEGER},
+      validate = #{validate,jdbcType=INTEGER},
+      nickname = #{nickname,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=CHAR},
+      birthday = #{birthday,jdbcType=DATE},
+      source = #{source,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      open_id = #{openId,jdbcType=VARCHAR},
+      open_type = #{openType,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
