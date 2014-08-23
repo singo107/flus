@@ -33,6 +33,24 @@ public interface AccountUserService {
     AccountUserEntity signup(String loginname, String password);
 
     /**
+     * 密码校验
+     * 
+     * @param loginname
+     * @param password
+     * @return
+     */
+    boolean checkPassword(String loginname, String password);
+
+    /**
+     * 密码校验
+     * 
+     * @param entity
+     * @param password
+     * @return
+     */
+    boolean checkPassword(AccountUserEntity entity, String password);
+
+    /**
      * 判断用户名是否占用
      * 
      * @param loginname

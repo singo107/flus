@@ -15,6 +15,7 @@ import cn.flus.account.core.enums.AccountType;
 import cn.flus.account.core.enums.LoginnameType;
 import cn.flus.account.core.exceptions.LoginnameExistException;
 import cn.flus.account.core.exceptions.LoginnameInvalidException;
+import cn.flus.account.core.exceptions.LoginnameNotFoundException;
 import cn.flus.account.core.exceptions.PasswordInvalidException;
 import cn.flus.account.core.service.AccountUserService;
 import cn.flus.account.core.utils.PasswordStrength;
@@ -131,6 +132,28 @@ public class AccountUserServiceImpl implements AccountUserService {
         return false;
     }
 
+    @Override
+    public boolean checkPassword(String loginname, String password) {
+        AccountUserEntity entity = getByLoginname(loginname);
+        if (entity == null) {
+            throw new LoginnameNotFoundException("loginname is not exist.");
+        }
+        return checkPassword(entity, password);
+    }
+
+    @Override
+    public boolean checkPassword(AccountUserEntity entity, String password) {
+
+        Assert.notNull(entity);
+        Assert.hasText(password);
+        Assert.hasText(entity.getPassword());
+        Assert.hasText(entity.getPasswordSalt());
+
+        // 使用密码盐与参数password作Hash运算
+        String passwordMd5Hex = DigestUtils.md5Hex(password + entity.getPasswordSalt());
+        return passwordMd5Hex.equals(entity.getPassword());
+    }
+
     /**
      * 生成密码盐
      * 
@@ -139,4 +162,5 @@ public class AccountUserServiceImpl implements AccountUserService {
     private String generateSalt() {
         return RandomStringUtils.randomAlphanumeric(16);
     }
+
 }

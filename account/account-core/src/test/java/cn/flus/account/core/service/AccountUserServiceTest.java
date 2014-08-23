@@ -1,6 +1,7 @@
 package cn.flus.account.core.service;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,10 +27,12 @@ public class AccountUserServiceTest {
     }
 
     @Test
-    public void test() {
-        String loginname = "singo@qq.com";
-        String password = "12E12!~@qw";
+    public void test1() {
+        String loginname = "zhouxing";
+        String password = "000000";
         AccountUserEntity accountUserEntity = accountUserService.signup(loginname, password);
         System.out.println(accountUserEntity.getId());
+        boolean as = accountUserService.checkPassword(loginname, password);
+        Assert.assertEquals(true, as);
     }
 }
