@@ -1,5 +1,8 @@
 package cn.flus.account.web.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -24,7 +27,7 @@ public class LoginController extends BaseController {
     private AccountUserService accountUserService;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public ModelAndView loginPage(ModelMap model) {
+    public ModelAndView loginPage(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
         return new ModelAndView("login");
     }
 
