@@ -16,5 +16,8 @@
 	</context:component-scan>
 	<context:annotation-config />
 
+	<bean name="defaultFilterChain" class="cn.flus.account.web.filter.DefaultFilterChain">
+	</bean>
+
 	<import resource="classpath:spring-mysql-config.xml" />
 </beans>

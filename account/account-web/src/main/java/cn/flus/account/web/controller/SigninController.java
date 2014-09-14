@@ -21,19 +21,20 @@ import cn.flus.account.core.service.AccountUserService;
  */
 @Controller
 @RequestMapping("/")
-public class LoginController extends BaseController {
+public class SigninController extends BaseController {
 
     @Autowired
     private AccountUserService accountUserService;
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public ModelAndView loginPage(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
-        return new ModelAndView("login");
+    @RequestMapping(value = "/signin", method = RequestMethod.GET)
+    public ModelAndView signinPage(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+        return new ModelAndView("signin");
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ModelAndView loginPost(@RequestParam(value = "loginname", required = true) String loginname,
-                                  @RequestParam(value = "password", required = true) String password, ModelMap model) {
+    @RequestMapping(value = "/signin", method = RequestMethod.POST)
+    public ModelAndView signinPagePost(@RequestParam(value = "loginname", required = true) String loginname,
+                                       @RequestParam(value = "password", required = true) String password,
+                                       ModelMap model) {
         AccountUserEntity accountUserEntity = accountUserService.getByLoginname(loginname);
         boolean s = accountUserService.checkPassword(accountUserEntity, password);
         System.out.println(s);

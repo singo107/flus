@@ -1,4 +1,4 @@
-package cn.flus.account.web.security;
+package cn.flus.account.web.filter;
 
 import java.io.IOException;
 import java.util.List;
@@ -11,31 +11,38 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.stereotype.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.filter.GenericFilterBean;
 
-@Service("securityFilterChain")
-public class SecurityFilterChainProxy extends GenericFilterBean {
+import cn.flus.account.web.utils.UrlUtils;
+
+/**
+ * 默认的FilterChain
+ * 
+ * @author zhouxing 2014-09-14
+ */
+public class DefaultFilterChain extends GenericFilterBean {
+
+    private static final Logger logger = LoggerFactory.getLogger(DefaultFilterChain.class);
+    private List<Filter>        filters;
+
+    public void setFilters(List<Filter> filters) {
+        this.filters = filters;
+    }
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException,
                                                                                              ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
-
-        // 获取filter列表
-        List<Filter> filters = getFilters(httpRequest);
         if (filters == null || filters.size() == 0) {
+            logger.debug(UrlUtils.buildRequestUrl(httpRequest) + " has an empty filter list.");
             chain.doFilter(httpRequest, httpResponse);
             return;
         }
-
         VirtualFilterChain vfc = new VirtualFilterChain(chain, filters);
         vfc.doFilter(httpRequest, httpResponse);
-    }
-
-    private List<Filter> getFilters(HttpServletRequest request) {
-        return null;
     }
 
     private static class VirtualFilterChain implements FilterChain {
