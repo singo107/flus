@@ -3,7 +3,12 @@
 .settings
 target
 META-INF
+.externalToolBuilders
 *.log
 .DS_Store
+*.iml
+.idea
+.springBeans
+.clover
+rebel.xml
 Thumbs.db
-/bin
