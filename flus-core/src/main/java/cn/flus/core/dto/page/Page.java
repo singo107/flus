@@ -164,6 +164,15 @@ public class Page implements Serializable {
         }
     }
 
+    /**
+     * 获取html格式的前端展示
+     * 
+     * @return
+     */
+    public String getHtmlDisplay() {
+        return new PageHtmlDisplay().display(this);
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
