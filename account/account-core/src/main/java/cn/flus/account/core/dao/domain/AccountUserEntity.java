@@ -2,6 +2,12 @@ package cn.flus.account.core.dao.domain;
 
 import java.util.Date;
 
+/**
+ * 用户实体
+ * 
+ * @author singo
+ *
+ */
 public class AccountUserEntity {
 
     private Integer id;
