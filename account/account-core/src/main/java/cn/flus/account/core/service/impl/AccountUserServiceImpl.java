@@ -11,17 +11,17 @@ import org.springframework.util.Assert;
 import cn.flus.account.core.dao.AccountUserDao;
 import cn.flus.account.core.dao.domain.AccountUserEntity;
 import cn.flus.account.core.enums.AccountStatus;
-import cn.flus.account.core.enums.AccountType;
-import cn.flus.account.core.enums.LoginnameType;
+import cn.flus.account.core.enums.VerifyTag;
 import cn.flus.account.core.exceptions.LoginnameExistException;
 import cn.flus.account.core.exceptions.LoginnameInvalidException;
 import cn.flus.account.core.exceptions.LoginnameNotFoundException;
 import cn.flus.account.core.exceptions.PasswordInvalidException;
 import cn.flus.account.core.service.AccountUserService;
+import cn.flus.account.core.utils.LoginnameUtils;
 import cn.flus.account.core.utils.PasswordStrength;
 
 /**
- * @author zhouxing
+ * @author singo
  */
 @Service("accountUserService")
 public class AccountUserServiceImpl implements AccountUserService {
@@ -46,8 +46,7 @@ public class AccountUserServiceImpl implements AccountUserService {
         Assert.hasText(password);
 
         // loginname校验
-        LoginnameType loginnameType = LoginnameType.getByLoginname(loginname);
-        if (loginnameType == null) {
+        if (!LoginnameUtils.check(loginname)) {
             throw new LoginnameInvalidException("loginname is invalid.");
         }
 
@@ -76,18 +75,16 @@ public class AccountUserServiceImpl implements AccountUserService {
         entity.setPasswordSalt(passwordSalt);
         entity.setPasswordStrength(strength);
         entity.setStatus(AccountStatus.AVAILABLE.getCode());
-        entity.setType(AccountType.NORMAL.getCode());
-        entity.setLevel(1);
-        entity.setValidate(0);
-        entity.setCreateTime(new Date());
+        entity.setRegisterTime(new Date());
 
         // 如果用户名是Email，则设置email
-        if (LoginnameType.EMAIL.equals(loginnameType)) {
+        if (LoginnameUtils.isEmail(loginname)) {
             entity.setEmail(loginname);
+            entity.setEmailVerified(VerifyTag.NOT_VERIFIED.getCode());
         }
 
         // 如果用户名是Mobile，则设置mobile
-        if (LoginnameType.MOBILE.equals(loginnameType)) {
+        if (LoginnameUtils.isMobile(loginname)) {
             entity.setMobile(loginname);
         }
 
@@ -105,8 +102,7 @@ public class AccountUserServiceImpl implements AccountUserService {
         Assert.hasText(loginname);
 
         // loginname校验
-        LoginnameType loginnameType = LoginnameType.getByLoginname(loginname);
-        if (loginnameType == null) {
+        if (!LoginnameUtils.check(loginname)) {
             throw new LoginnameInvalidException("loginname is invalid.");
         }
 
@@ -116,14 +112,14 @@ public class AccountUserServiceImpl implements AccountUserService {
         }
 
         // 如果用户名是email，还需检查email是否已经占用
-        if (LoginnameType.EMAIL.equals(loginnameType)) {
+        if (LoginnameUtils.isEmail(loginname)) {
             if (accountUserDao.getByEmail(loginname) != null) {
                 return true;
             }
         }
 
         // 如果用户名是mobile，还需检查mobile是否已经占用
-        if (LoginnameType.MOBILE.equals(loginnameType)) {
+        if (LoginnameUtils.isMobile(loginname)) {
             if (accountUserDao.getByMobile(loginname) != null) {
                 return true;
             }

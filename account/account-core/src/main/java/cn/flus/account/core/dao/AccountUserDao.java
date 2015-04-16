@@ -3,7 +3,7 @@ package cn.flus.account.core.dao;
 import cn.flus.account.core.dao.domain.AccountUserEntity;
 
 /**
- * @author zhouxing
+ * @author singo
  */
 public interface AccountUserDao {
 

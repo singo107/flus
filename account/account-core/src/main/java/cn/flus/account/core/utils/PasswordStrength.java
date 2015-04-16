@@ -3,7 +3,7 @@ package cn.flus.account.core.utils;
 /**
  * 判断密码强度工具类
  * 
- * @author zhouxing
+ * @author singo
  */
 public class PasswordStrength {
 

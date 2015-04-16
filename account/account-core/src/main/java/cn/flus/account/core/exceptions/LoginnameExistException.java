@@ -3,7 +3,7 @@ package cn.flus.account.core.exceptions;
 /**
  * 用户名已经占用异常
  * 
- * @author zhouxing
+ * @author singo
  */
 public class LoginnameExistException extends RuntimeException {
 

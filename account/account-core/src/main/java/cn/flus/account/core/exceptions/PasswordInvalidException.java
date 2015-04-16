@@ -3,7 +3,7 @@ package cn.flus.account.core.exceptions;
 /**
  * 密码不合法异常
  * 
- * @author zhouxing
+ * @author singo
  */
 public class PasswordInvalidException extends IllegalArgumentException {
 

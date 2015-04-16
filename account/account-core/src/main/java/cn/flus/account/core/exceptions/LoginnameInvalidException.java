@@ -3,7 +3,7 @@ package cn.flus.account.core.exceptions;
 /**
  * 用户名不合法异常
  * 
- * @author zhouxing
+ * @author singo
  */
 public class LoginnameInvalidException extends IllegalArgumentException {
 

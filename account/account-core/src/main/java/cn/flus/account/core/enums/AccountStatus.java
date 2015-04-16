@@ -4,11 +4,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author zhoux
+ * @author singo
  */
 public enum AccountStatus {
 
-    DELETED(0), AVAILABLE(1);
+    TEMPORARY(0), AVAILABLE(1);
 
     private Integer code;
 
@@ -19,7 +19,7 @@ public enum AccountStatus {
     private static final Map<Integer, AccountStatus> map = new HashMap<Integer, AccountStatus>();
 
     static {
-        map.put(AccountStatus.DELETED.getCode(), AccountStatus.DELETED);
+        map.put(AccountStatus.TEMPORARY.getCode(), AccountStatus.TEMPORARY);
         map.put(AccountStatus.AVAILABLE.getCode(), AccountStatus.AVAILABLE);
     }
 

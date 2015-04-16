@@ -3,7 +3,7 @@ package cn.flus.account.core.dto;
 /**
  * 存放在Session中的用户信息
  * 
- * @author zhouxing
+ * @author singo
  */
 public class LoginUser {
 
@@ -13,8 +13,6 @@ public class LoginUser {
 
     private String  email;
     private String  mobile;
-    private String  emailChecked;
-    private String  mobileChecked;
 
     public Integer getId() {
         return id;
@@ -54,22 +52,6 @@ public class LoginUser {
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
-    }
-
-    public String getEmailChecked() {
-        return emailChecked;
-    }
-
-    public void setEmailChecked(String emailChecked) {
-        this.emailChecked = emailChecked;
-    }
-
-    public String getMobileChecked() {
-        return mobileChecked;
-    }
-
-    public void setMobileChecked(String mobileChecked) {
-        this.mobileChecked = mobileChecked;
     }
 
 }

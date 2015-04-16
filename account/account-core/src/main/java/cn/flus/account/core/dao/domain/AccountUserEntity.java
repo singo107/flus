@@ -2,21 +2,11 @@ package cn.flus.account.core.dao.domain;
 
 import java.util.Date;
 
-/**
- * 用户实体
- * 
- * @author singo
- *
- */
 public class AccountUserEntity {
 
     private Integer id;
 
     private String  loginname;
-
-    private String  email;
-
-    private String  mobile;
 
     private String  password;
 
@@ -26,27 +16,21 @@ public class AccountUserEntity {
 
     private Integer status;
 
-    private Integer level;
+    private String  email;
 
-    private Integer type;
+    private String  mobile;
 
-    private Integer validate;
+    private String  emailVerified;
+
+    private String  mobileVerified;
 
     private String  nickname;
 
     private String  gender;
 
-    private Date    birthday;
-
     private String  source;
 
-    private String  description;
-
-    private String  openId;
-
-    private String  openType;
-
-    private Date    createTime;
+    private Date    registerTime;
 
     public Integer getId() {
         return id;
@@ -62,22 +46,6 @@ public class AccountUserEntity {
 
     public void setLoginname(String loginname) {
         this.loginname = loginname;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getMobile() {
-        return mobile;
-    }
-
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
     }
 
     public String getPassword() {
@@ -112,28 +80,36 @@ public class AccountUserEntity {
         this.status = status;
     }
 
-    public Integer getLevel() {
-        return level;
+    public String getEmail() {
+        return email;
     }
 
-    public void setLevel(Integer level) {
-        this.level = level;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public Integer getType() {
-        return type;
+    public String getMobile() {
+        return mobile;
     }
 
-    public void setType(Integer type) {
-        this.type = type;
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 
-    public Integer getValidate() {
-        return validate;
+    public String getEmailVerified() {
+        return emailVerified;
     }
 
-    public void setValidate(Integer validate) {
-        this.validate = validate;
+    public void setEmailVerified(String emailVerified) {
+        this.emailVerified = emailVerified;
+    }
+
+    public String getMobileVerified() {
+        return mobileVerified;
+    }
+
+    public void setMobileVerified(String mobileVerified) {
+        this.mobileVerified = mobileVerified;
     }
 
     public String getNickname() {
@@ -152,14 +128,6 @@ public class AccountUserEntity {
         this.gender = gender;
     }
 
-    public Date getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
-    }
-
     public String getSource() {
         return source;
     }
@@ -168,35 +136,11 @@ public class AccountUserEntity {
         this.source = source;
     }
 
-    public String getDescription() {
-        return description;
+    public Date getRegisterTime() {
+        return registerTime;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getOpenId() {
-        return openId;
-    }
-
-    public void setOpenId(String openId) {
-        this.openId = openId;
-    }
-
-    public String getOpenType() {
-        return openType;
-    }
-
-    public void setOpenType(String openType) {
-        this.openType = openType;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
+    public void setRegisterTime(Date registerTime) {
+        this.registerTime = registerTime;
     }
 }
