@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<configuration>
+	<protected>
+		<requestPattern pattern="" httpMethod="" />
+	</protected>
+	<unprotected>
+		<requestPattern pattern="/signin" httpMethod="get" />
+		<requestPattern pattern="/signin" httpMethod="post" />
+		<requestPattern pattern="/signup" httpMethod="get" />
+		<requestPattern pattern="/signup" httpMethod="post" />
+	</unprotected>
+</configuration>

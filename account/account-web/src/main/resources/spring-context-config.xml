@@ -16,7 +16,12 @@
 	</context:component-scan>
 	<context:annotation-config />
 
-	<bean name="defaultFilterChain" class="cn.flus.account.web.filter.DefaultFilterChain">
+	<bean name="accountFilterChain" class="cn.flus.account.web.filter.AccountFilterChain">
+		<property name="filters">
+			<list>
+				<ref bean="loginProtectedFilter" />
+			</list>
+		</property>
 	</bean>
 
 	<import resource="classpath:spring-mysql-config.xml" />

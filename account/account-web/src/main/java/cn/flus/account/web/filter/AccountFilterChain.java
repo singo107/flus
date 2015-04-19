@@ -18,13 +18,13 @@ import org.springframework.web.filter.GenericFilterBean;
 import cn.flus.account.web.utils.UrlUtils;
 
 /**
- * 默认的FilterChain
+ * 统一的Filter入口，用于登录认证
  * 
- * @author zhouxing 2014-09-14
+ * @author singo 2014-09-14
  */
-public class DefaultFilterChain extends GenericFilterBean {
+public class AccountFilterChain extends GenericFilterBean {
 
-    private static final Logger logger = LoggerFactory.getLogger(DefaultFilterChain.class);
+    private static final Logger logger = LoggerFactory.getLogger(AccountFilterChain.class);
     private List<Filter>        filters;
 
     public void setFilters(List<Filter> filters) {
