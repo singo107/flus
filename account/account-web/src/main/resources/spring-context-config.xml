@@ -25,4 +25,5 @@
 	</bean>
 
 	<import resource="classpath:spring-mysql-config.xml" />
+	<import resource="classpath:spring-login-unprotected.xml" />
 </beans>

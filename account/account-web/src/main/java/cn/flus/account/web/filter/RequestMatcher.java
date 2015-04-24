@@ -1,4 +1,4 @@
-package cn.flus.account.web.config;
+package cn.flus.account.web.filter;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -28,7 +28,7 @@ public class RequestMatcher {
 
     public RequestMatcher(String pattern, String httpMethod) {
 
-        logger.debug("pattern: " + pattern + "httpMethod: " + httpMethod);
+        logger.debug("pattern: " + pattern + ", httpMethod: " + httpMethod);
 
         if (pattern.equals(MATCH_ALL) || pattern.equals("**")) {
             pattern = MATCH_ALL;
