@@ -17,10 +17,10 @@ import org.springframework.web.filter.GenericFilterBean;
 import cn.flus.account.web.config.RequestPattern;
 import cn.flus.account.web.config.UnprotectedConfig;
 
-@Service("loginProtectedFilter")
-public class LoginProtectedFilter extends GenericFilterBean {
+@Service("whetherProtectedFilter")
+public class WhetherProtectedFilter extends GenericFilterBean {
 
-    public static final String          IF_UNPROTECTED = LoginProtectedFilter.class.getName() + ".unprotected";
+    public static final String          WHETHER_PROTECTED = WhetherProtectedFilter.class.getName() + ".unprotected";
 
     @Autowired
     private UnprotectedConfig           unprotectedConfig;
@@ -34,7 +34,9 @@ public class LoginProtectedFilter extends GenericFilterBean {
 
         // 过滤不受登录保护的页面
         boolean unprotected = check(httpRequest);
-        httpRequest.setAttribute(IF_UNPROTECTED, unprotected);
+        httpRequest.setAttribute(WHETHER_PROTECTED, unprotected);
+
+        chain.doFilter(request, response);
     }
 
     /**

@@ -9,6 +9,7 @@
 	<http pattern="/index" security="none" />
 
 	<http auto-config="true">
+		<remember-me key="flus" />
 		<intercept-url pattern="/*" access="ROLE_USER" />
 	</http>
 

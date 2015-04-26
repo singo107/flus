@@ -19,7 +19,10 @@
 	<bean name="accountFilterChain" class="cn.flus.account.web.filter.AccountFilterChain">
 		<property name="filters">
 			<list>
-				<ref bean="loginProtectedFilter" />
+				<ref bean="whetherProtectedFilter" />
+				<ref bean="loginContextStorageFilter" />
+				<ref bean="rememberMeFilter" />
+				<ref bean="cookieManagementFilter" />
 			</list>
 		</property>
 	</bean>

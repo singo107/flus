@@ -1,4 +1,4 @@
-package cn.flus.account.core.dto;
+package cn.flus.account.web.domain;
 
 /**
  * 存放在Session中的用户信息
