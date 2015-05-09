@@ -54,4 +54,9 @@ public class LoginUser {
         this.mobile = mobile;
     }
 
+    @Override
+    public String toString() {
+        return "LoginUser [id=" + id + ", loginname=" + loginname + ", nickname=" + nickname + ", email=" + email
+               + ", mobile=" + mobile + "]";
+    }
 }

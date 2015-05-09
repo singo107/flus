@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
       http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
       http://www.springframework.org/schema/context
-      http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+      http://www.springframework.org/schema/context/spring-context-3.1.xsd
+      http://www.springframework.org/schema/util
+      http://www.springframework.org/schema/util/spring-util-3.1.xsd">
 
 	<context:property-placeholder location="classpath:default.properties"
 		ignore-resource-not-found="true" file-encoding="utf-8" />
@@ -16,16 +19,11 @@
 	</context:component-scan>
 	<context:annotation-config />
 
-	<bean name="accountFilterChain" class="cn.flus.account.web.filter.AccountFilterChain">
-		<property name="filters">
-			<list>
-				<ref bean="whetherProtectedFilter" />
-				<ref bean="loginContextStorageFilter" />
-				<ref bean="rememberMeFilter" />
-				<ref bean="cookieManagementFilter" />
-			</list>
-		</property>
-	</bean>
+	<util:list id="accountFilterList">
+		<ref bean="loginContextStorageFilter" />
+		<ref bean="rememberMeFilter" />
+		<ref bean="redirect2LoginFilter" />
+	</util:list>
 
 	<import resource="classpath:spring-mysql-config.xml" />
 	<import resource="classpath:spring-login-unprotected.xml" />

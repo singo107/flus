@@ -1,26 +1,29 @@
 package cn.flus.account.web.filter;
 
-import cn.flus.account.web.domain.LoginUser;
 
 public class LoginContextHolder {
 
-    private static final ThreadLocal<LoginUser> holder = new ThreadLocal<LoginUser>();
+    private static final ThreadLocal<LoginContext> holder = new ThreadLocal<LoginContext>();
 
-    public void clearContext() {
+    public static void clearContext() {
         holder.remove();
     }
 
-    public LoginUser getContext() {
-        LoginUser loginUser = holder.get();
-        if (loginUser == null) {
-            loginUser = new LoginUser();
-            holder.set(loginUser);
+    public static LoginContext getContext() {
+        LoginContext ctx = holder.get();
+        if (ctx == null) {
+            ctx = createEmptyContext();
+            holder.set(ctx);
         }
-        return loginUser;
+        return ctx;
     }
 
-    public void setContext(LoginUser loginUser) {
-        holder.set(loginUser);
+    public static void setContext(LoginContext loginContext) {
+        holder.set(loginContext);
+    }
+
+    public static LoginContext createEmptyContext() {
+        return new LoginContext();
     }
 
 }
