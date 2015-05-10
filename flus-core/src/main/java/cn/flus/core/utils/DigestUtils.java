@@ -43,6 +43,7 @@ public class DigestUtils {
         return encrypt(value, SHA_ALGORITHM);
     }
 
+    @SuppressWarnings("resource")
     public static String encryptFile(String path, String algorithm) {
 
         if (path == null || path.length() == 0) {
