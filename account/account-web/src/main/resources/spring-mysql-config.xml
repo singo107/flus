@@ -7,10 +7,10 @@
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
 	</bean>
 	<bean id="mysqlDataSource" class="org.apache.commons.dbcp.BasicDataSource">
-		<property name="driverClassName" value="${account.mysql.driverClassName}" />
-		<property name="url" value="${account.mysql.url}" />
-		<property name="username" value="${account.mysql.username}" />
-		<property name="password" value="${account.mysql.password}" />
+		<property name="driverClassName" value="${mysql.driverClassName}" />
+		<property name="url" value="${mysql.url}" />
+		<property name="username" value="${mysql.username}" />
+		<property name="password" value="${mysql.password}" />
 	</bean>
 	<bean id="sqlSessionFactory" name="sqlSessionFactory"
 		class="org.mybatis.spring.SqlSessionFactoryBean">
