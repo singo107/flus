@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.flus.cms.core.dao.mapper.CategoryEntityMapper" >
+  <resultMap id="BaseResultMap" type="cn.flus.cms.core.dao.domain.CategoryEntity" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="parent_id" property="parentId" jdbcType="INTEGER" />
+    <result column="depth" property="depth" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="allow_comments" property="allowComments" jdbcType="CHAR" />
+    <result column="weight" property="weight" jdbcType="INTEGER" />
+    <result column="creator_id" property="creatorId" jdbcType="BIGINT" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="delete_flag" property="deleteFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, parent_id, depth, name, status, allow_comments, weight, creator_id, creator, 
+    create_time, delete_flag
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from category
+    where id = #{id,jdbcType=INTEGER}
+    and delete_flag = 'n'
+  </select>
+  <select id="selectBySelective" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from category
+    where 1=1
+    <if test="parentId != null">
+      and parent_id = #{parentId,jdbcType=INTEGER}
+    </if>
+    <if test="status != null">
+      and status = #{status,jdbcType=INTEGER}
+    </if>
+    and delete_flag = 'n'
+  </select>
+  
+  <insert id="insert" parameterType="cn.flus.cms.core.dao.domain.CategoryEntity" >
+  	<selectKey resultType="java.lang.Integer" keyProperty="id" >
+      select last_insert_id()
+    </selectKey>
+    insert into category (id, parent_id, depth, 
+      name, status, allow_comments, 
+      weight, creator_id, creator, 
+      create_time, delete_flag)
+    values (#{id,jdbcType=INTEGER}, #{parentId,jdbcType=INTEGER}, #{depth,jdbcType=INTEGER}, 
+      #{name,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{allowComments,jdbcType=CHAR}, 
+      #{weight,jdbcType=INTEGER}, #{creatorId,jdbcType=BIGINT}, #{creator,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{deleteFlag,jdbcType=CHAR})
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="cn.flus.cms.core.dao.domain.CategoryEntity" >
+    update category
+    <set >
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="depth != null" >
+        depth = #{depth,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="allowComments != null" >
+        allow_comments = #{allowComments,jdbcType=CHAR},
+      </if>
+      <if test="weight != null" >
+        weight = #{weight,jdbcType=INTEGER},
+      </if>
+      <if test="creatorId != null" >
+        creator_id = #{creatorId,jdbcType=BIGINT},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteFlag != null" >
+        delete_flag = #{deleteFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+    and delete_flag = 'n'
+  </update>
+  
+  <update id="updateDeleteFlag">
+    update category 
+    set delete_flag = 'y'
+    where id in
+	<foreach collection="ids" item="item" index="index" open="(" separator="," close=")">
+	  #{item}
+	</foreach>
+  </update>
+</mapper>

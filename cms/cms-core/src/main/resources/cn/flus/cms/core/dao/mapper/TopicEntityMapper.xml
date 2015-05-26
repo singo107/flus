@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.flus.cms.core.dao.mapper.TopicEntityMapper" >
+  <resultMap id="BaseResultMap" type="cn.flus.cms.core.dao.domain.TopicEntity" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="category_id" property="categoryId" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="summary" property="summary" jdbcType="VARCHAR" />
+    <result column="thumbnail" property="thumbnail" jdbcType="VARCHAR" />
+    <result column="keywords" property="keywords" jdbcType="VARCHAR" />
+    <result column="author_id" property="authorId" jdbcType="BIGINT" />
+    <result column="author" property="author" jdbcType="VARCHAR" />
+    <result column="source" property="source" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="link_out" property="linkOut" jdbcType="CHAR" />
+    <result column="link_url" property="linkUrl" jdbcType="VARCHAR" />
+    <result column="allow_user_post" property="allowUserPost" jdbcType="CHAR" />
+    <result column="allow_comments" property="allowComments" jdbcType="CHAR" />
+    <result column="place_top" property="placeTop" jdbcType="CHAR" />
+    <result column="view_count" property="viewCount" jdbcType="INTEGER" />
+    <result column="comments_count" property="commentsCount" jdbcType="INTEGER" />
+    <result column="praise_count" property="praiseCount" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="publish_time" property="publishTime" jdbcType="TIMESTAMP" />
+    <result column="delete_flag" property="deleteFlag" jdbcType="CHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="cn.flus.cms.core.dao.domain.TopicEntity" extends="BaseResultMap" >
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, category_id, title, summary, thumbnail, keywords, author_id, author, source, 
+    status, link_out, link_url, allow_user_post, allow_comments, place_top, view_count, 
+    comments_count, praise_count, create_time, publish_time, delete_flag
+  </sql>
+  <sql id="Blob_Column_List" >
+    content
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from topic
+    where id = #{id,jdbcType=INTEGER}
+    and delete_flag = 'n'
+  </select>
+  
+  <select id="selectByOrderdCategoryId" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from topic
+    where category_id = #{categoryId,jdbcType=INTEGER}
+    <if test="status != null">
+      and status = #{status,jdbcType=INTEGER}
+    </if>
+    and delete_flag = 'n'
+    order by place_top desc,
+    <if test="orderFiled == 'viewCount'">
+        view_count
+    </if>
+    <if test="orderFiled == 'commentsCount'">
+        comments_count
+    </if>
+    <if test="orderFiled == 'praiseCount'">
+        praise_count
+    </if>
+    <if test="orderFiled == 'createTime'">
+        create_time
+    </if>
+    <if test="orderFiled == 'publishTime'">
+        publish_time
+    </if>
+    <if test="orderType == 'desc'">
+        desc
+    </if>
+    <if test="orderType == 'asc'">
+        asc
+    </if>
+    limit #{start}, #{size}
+  </select>
+  <select id="countSelectByOrderdCategoryId" resultType="java.lang.Integer" >
+    select 
+    count(id)
+    from topic
+    where category_id = #{categoryId,jdbcType=INTEGER}
+    <if test="status != null">
+      and status = #{status,jdbcType=INTEGER}
+    </if>
+    and delete_flag = 'n'
+  </select>
+  
+  <insert id="insert" parameterType="cn.flus.cms.core.dao.domain.TopicEntity" >
+  	<selectKey resultType="java.lang.Integer" keyProperty="id" >
+      select last_insert_id()
+    </selectKey>
+    insert into topic (id, category_id, title, 
+      summary, thumbnail, keywords, 
+      author_id, author, source, 
+      status, link_out, link_url, 
+      allow_user_post, allow_comments, place_top, 
+      view_count, comments_count, praise_count, 
+      create_time, publish_time, delete_flag, 
+      content)
+    values (#{id,jdbcType=INTEGER}, #{categoryId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, 
+      #{summary,jdbcType=VARCHAR}, #{thumbnail,jdbcType=VARCHAR}, #{keywords,jdbcType=VARCHAR}, 
+      #{authorId,jdbcType=BIGINT}, #{author,jdbcType=VARCHAR}, #{source,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{linkOut,jdbcType=CHAR}, #{linkUrl,jdbcType=VARCHAR}, 
+      #{allowUserPost,jdbcType=CHAR}, #{allowComments,jdbcType=CHAR}, #{placeTop,jdbcType=CHAR}, 
+      #{viewCount,jdbcType=INTEGER}, #{commentsCount,jdbcType=INTEGER}, #{praiseCount,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{publishTime,jdbcType=TIMESTAMP}, #{deleteFlag,jdbcType=CHAR}, 
+      #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="cn.flus.cms.core.dao.domain.TopicEntity" >
+    update topic
+    <set >
+      <if test="categoryId != null" >
+        category_id = #{categoryId,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="summary != null" >
+        summary = #{summary,jdbcType=VARCHAR},
+      </if>
+      <if test="thumbnail != null" >
+        thumbnail = #{thumbnail,jdbcType=VARCHAR},
+      </if>
+      <if test="keywords != null" >
+        keywords = #{keywords,jdbcType=VARCHAR},
+      </if>
+      <if test="authorId != null" >
+        author_id = #{authorId,jdbcType=BIGINT},
+      </if>
+      <if test="author != null" >
+        author = #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null" >
+        source = #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="linkOut != null" >
+        link_out = #{linkOut,jdbcType=CHAR},
+      </if>
+      <if test="linkUrl != null" >
+        link_url = #{linkUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="allowUserPost != null" >
+        allow_user_post = #{allowUserPost,jdbcType=CHAR},
+      </if>
+      <if test="allowComments != null" >
+        allow_comments = #{allowComments,jdbcType=CHAR},
+      </if>
+      <if test="placeTop != null" >
+        place_top = #{placeTop,jdbcType=CHAR},
+      </if>
+      <if test="viewCount != null" >
+        view_count = #{viewCount,jdbcType=INTEGER},
+      </if>
+      <if test="commentsCount != null" >
+        comments_count = #{commentsCount,jdbcType=INTEGER},
+      </if>
+      <if test="praiseCount != null" >
+        praise_count = #{praiseCount,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="publishTime != null" >
+        publish_time = #{publishTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteFlag != null" >
+        delete_flag = #{deleteFlag,jdbcType=CHAR},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+    and delete_flag = 'n'
+  </update>
+  
+  <update id="updateDeleteFlag">
+    update topic 
+    set delete_flag = 'y'
+    where id in
+	<foreach collection="ids" item="item" index="index" open="(" separator="," close=")">
+	  #{item}
+	</foreach>
+  </update>
+</mapper>

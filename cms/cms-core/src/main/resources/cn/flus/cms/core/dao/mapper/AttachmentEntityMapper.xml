@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.flus.cms.core.dao.mapper.AttachmentEntityMapper" >
+  <resultMap id="BaseResultMap" type="cn.flus.cms.core.dao.domain.AttachmentEntity" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="file_size" property="fileSize" jdbcType="BIGINT" />
+    <result column="uploader_id" property="uploaderId" jdbcType="BIGINT" />
+    <result column="uploader" property="uploader" jdbcType="VARCHAR" />
+    <result column="upload_time" property="uploadTime" jdbcType="TIMESTAMP" />
+    <result column="delete_flag" property="deleteFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, title, url, file_size, uploader_id, uploader, upload_time, delete_flag
+  </sql>
+  
+  <insert id="insert" parameterType="cn.flus.cms.core.dao.domain.AttachmentEntity" >
+  	<selectKey resultType="java.lang.Integer" keyProperty="id" >
+      select last_insert_id()
+    </selectKey>
+    insert into attachment (id, title, url, 
+      file_size, uploader_id, uploader, 
+      upload_time, delete_flag)
+    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
+      #{fileSize,jdbcType=BIGINT}, #{uploaderId,jdbcType=BIGINT}, #{uploader,jdbcType=VARCHAR}, 
+      #{uploadTime,jdbcType=TIMESTAMP}, #{deleteFlag,jdbcType=CHAR})
+  </insert>
+  
+  <select id="selectBySelective" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from attachment
+    where 1=1
+    <if test="title != null">
+      and title like concat('%',#{title,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="url != null">
+      and url like concat('%',#{url,jdbcType=VARCHAR},'%')
+    </if>
+    and delete_flag = 'n'
+    order by upload_time desc
+    limit #{start}, #{size}
+  </select>
+  <select id="countSelectBySelective" resultType="java.lang.Integer" >
+    select 
+    count(id)
+    from attachment
+    where 1=1
+    <if test="title != null">
+      and title like concat('%',#{title,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="url != null">
+      and url like concat('%',#{url,jdbcType=VARCHAR},'%')
+    </if>
+    and delete_flag = 'n'
+  </select>
+  
+  <update id="updateDeleteFlag">
+    update attachment 
+    set delete_flag = 'y'
+    where id in
+	<foreach collection="ids" item="item" index="index" open="(" separator="," close=")">
+	  #{item}
+	</foreach>
+  </update>
+</mapper>
