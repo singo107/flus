@@ -40,6 +40,7 @@ CREATE TABLE IF NOT EXISTS `reply` (
   `author_id` bigint(64) NOT NULL COMMENT '作者ID',
   `author` varchar(64) DEFAULT NULL COMMENT '作者名称',
   `content` text COMMENT '内容',
+  `recommend` char(1) DEFAULT NULL COMMENT '推荐',
   `praise_count` int(11) DEFAULT NULL COMMENT '点赞次数',
   `create_time` datetime NOT NULL COMMENT '发表时间',
   `delete_flag` char(1) NOT NULL COMMENT '逻辑删除标记',

@@ -87,8 +87,7 @@
     limit #{start}, #{size}
   </select>
   <select id="countSelectByOrderdCategoryId" resultType="java.lang.Integer" >
-    select 
-    count(id)
+    select count(id)
     from topic
     where category_id = #{categoryId,jdbcType=INTEGER}
     <if test="status != null">

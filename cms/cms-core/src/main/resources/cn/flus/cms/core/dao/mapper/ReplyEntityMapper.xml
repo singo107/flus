@@ -7,6 +7,7 @@
     <result column="status" property="status" jdbcType="INTEGER" />
     <result column="author_id" property="authorId" jdbcType="BIGINT" />
     <result column="author" property="author" jdbcType="VARCHAR" />
+    <result column="recommend" property="recommend" jdbcType="CHAR" />
     <result column="praise_count" property="praiseCount" jdbcType="INTEGER" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="delete_flag" property="deleteFlag" jdbcType="CHAR" />
@@ -15,145 +16,54 @@
     <result column="content" property="content" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, topic_id, status, author_id, author, praise_count, create_time, delete_flag
+    id, topic_id, status, author_id, author, recommend, praise_count, create_time, delete_flag
   </sql>
   <sql id="Blob_Column_List" >
     content
   </sql>
-  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+  
+  <insert id="insert" parameterType="cn.flus.cms.core.dao.domain.ReplyEntity" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" >
+      select last_insert_id()
+    </selectKey>
+    insert into reply (id, topic_id, status, 
+      author_id, author, recommend, 
+      praise_count, create_time, delete_flag, 
+      content)
+    values (#{id,jdbcType=INTEGER}, #{topicId,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{authorId,jdbcType=BIGINT}, #{author,jdbcType=VARCHAR}, #{recommend,jdbcType=CHAR}, 
+      #{praiseCount,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{deleteFlag,jdbcType=CHAR}, 
+      #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  
+  <select id="selectByOrderdTopicId" resultMap="BaseResultMap" >
     select 
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
     from reply
-    where id = #{id,jdbcType=INTEGER}
+	where topic_id = #{topicId,jdbcType=INTEGER}
+    <if test="status != null">
+      and status = #{status,jdbcType=INTEGER}
+    </if>
+    and delete_flag = 'n'
+    order by recommend desc
+    limit #{start}, #{size}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from reply
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="cn.flus.cms.core.dao.domain.ReplyEntity" >
-    insert into reply (id, topic_id, status, 
-      author_id, author, praise_count, 
-      create_time, delete_flag, content
-      )
-    values (#{id,jdbcType=INTEGER}, #{topicId,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
-      #{authorId,jdbcType=BIGINT}, #{author,jdbcType=VARCHAR}, #{praiseCount,jdbcType=INTEGER}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{deleteFlag,jdbcType=CHAR}, #{content,jdbcType=LONGVARCHAR}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="cn.flus.cms.core.dao.domain.ReplyEntity" >
-    insert into reply
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="topicId != null" >
-        topic_id,
-      </if>
-      <if test="status != null" >
-        status,
-      </if>
-      <if test="authorId != null" >
-        author_id,
-      </if>
-      <if test="author != null" >
-        author,
-      </if>
-      <if test="praiseCount != null" >
-        praise_count,
-      </if>
-      <if test="createTime != null" >
-        create_time,
-      </if>
-      <if test="deleteFlag != null" >
-        delete_flag,
-      </if>
-      <if test="content != null" >
-        content,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="topicId != null" >
-        #{topicId,jdbcType=INTEGER},
-      </if>
-      <if test="status != null" >
-        #{status,jdbcType=INTEGER},
-      </if>
-      <if test="authorId != null" >
-        #{authorId,jdbcType=BIGINT},
-      </if>
-      <if test="author != null" >
-        #{author,jdbcType=VARCHAR},
-      </if>
-      <if test="praiseCount != null" >
-        #{praiseCount,jdbcType=INTEGER},
-      </if>
-      <if test="createTime != null" >
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="deleteFlag != null" >
-        #{deleteFlag,jdbcType=CHAR},
-      </if>
-      <if test="content != null" >
-        #{content,jdbcType=LONGVARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.flus.cms.core.dao.domain.ReplyEntity" >
-    update reply
-    <set >
-      <if test="topicId != null" >
-        topic_id = #{topicId,jdbcType=INTEGER},
-      </if>
-      <if test="status != null" >
-        status = #{status,jdbcType=INTEGER},
-      </if>
-      <if test="authorId != null" >
-        author_id = #{authorId,jdbcType=BIGINT},
-      </if>
-      <if test="author != null" >
-        author = #{author,jdbcType=VARCHAR},
-      </if>
-      <if test="praiseCount != null" >
-        praise_count = #{praiseCount,jdbcType=INTEGER},
-      </if>
-      <if test="createTime != null" >
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="deleteFlag != null" >
-        delete_flag = #{deleteFlag,jdbcType=CHAR},
-      </if>
-      <if test="content != null" >
-        content = #{content,jdbcType=LONGVARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.flus.cms.core.dao.domain.ReplyEntity" >
-    update reply
-    set topic_id = #{topicId,jdbcType=INTEGER},
-      status = #{status,jdbcType=INTEGER},
-      author_id = #{authorId,jdbcType=BIGINT},
-      author = #{author,jdbcType=VARCHAR},
-      praise_count = #{praiseCount,jdbcType=INTEGER},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      delete_flag = #{deleteFlag,jdbcType=CHAR},
-      content = #{content,jdbcType=LONGVARCHAR}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="cn.flus.cms.core.dao.domain.ReplyEntity" >
-    update reply
-    set topic_id = #{topicId,jdbcType=INTEGER},
-      status = #{status,jdbcType=INTEGER},
-      author_id = #{authorId,jdbcType=BIGINT},
-      author = #{author,jdbcType=VARCHAR},
-      praise_count = #{praiseCount,jdbcType=INTEGER},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      delete_flag = #{deleteFlag,jdbcType=CHAR}
-    where id = #{id,jdbcType=INTEGER}
+  <select id="countSelectByOrderdTopicId" resultType="java.lang.Integer" >
+    select count(id)
+    from reply
+	where topic_id = #{topicId,jdbcType=INTEGER}
+    <if test="status != null">
+      and status = #{status,jdbcType=INTEGER}
+    </if>
+    and delete_flag = 'n'
+  </select>
+  
+  <update id="updateDeleteFlag">
+    update topic 
+    set reply = 'y'
+    where id in
+	<foreach collection="ids" item="item" index="index" open="(" separator="," close=")">
+	  #{item}
+	</foreach>
   </update>
 </mapper>

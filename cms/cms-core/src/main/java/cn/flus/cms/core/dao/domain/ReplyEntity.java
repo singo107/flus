@@ -14,6 +14,8 @@ public class ReplyEntity {
 
     private String  author;
 
+    private String  recommend;
+
     private Integer praiseCount;
 
     private Date    createTime;
@@ -60,6 +62,14 @@ public class ReplyEntity {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public String getRecommend() {
+        return recommend;
+    }
+
+    public void setRecommend(String recommend) {
+        this.recommend = recommend;
     }
 
     public Integer getPraiseCount() {
