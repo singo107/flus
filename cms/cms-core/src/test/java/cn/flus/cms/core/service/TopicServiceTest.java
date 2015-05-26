@@ -41,6 +41,7 @@ public class TopicServiceTest {
         topic.setTitle("title");
         topic.setSummary("summary");
         topic.setThumbnail("thumbnail");
+        topic.setContent("content");
         topic.setKeywords("keywords");
         topic.setAuthorId(1l);
         topic.setAuthor("author");
@@ -56,24 +57,35 @@ public class TopicServiceTest {
         topic.setPraiseCount(0);
         topic.setCreateTime(new Date());
         topic.setPublishTime(new Date());
-        topic.setContent("content");
+        topic.setLastReplyerId(2l);
+        topic.setLastReplyer("lastReplyer");
+        topic.setLastReplyTime(new Date());
         TopicEntity te = topicService.add(topic);
         System.out.println(topicService.get(te.getId()));
     }
 
-    // @Test
+    @Test
     public void test2() {
-        Page page = new Page(1, 10);
-        PagedList<TopicEntity> pagedList = topicService.getByCategoryId(17, TopicStatus.DRAFT.getValue(),
-                                                                        TopticOrderFiled.VC, OrderType.DESC, page);
+        Page page = new Page(10);
+        PagedList<TopicEntity> pagedList = topicService.getByCategoryId(17, null, TopticOrderFiled.RT, OrderType.DESC,
+                                                                        page);
         List<TopicEntity> list = pagedList.getList();
         for (TopicEntity e : list) {
             System.out.println(e);
         }
     }
 
-    @Test
+    // @Test
     public void test3() {
+        TopicEntity e = topicService.get(1);
+        e.setLastReplyerId(33l);
+        e.setLastReplyer("lastReplyer");
+        e.setLastReplyTime(new Date());
+        topicService.update(e);
+    }
+
+    // @Test
+    public void test4() {
         topicService.updateStatus(5, TopicStatus.OFFLINE.getValue());
         topicService.updatePlaceTop(5, true);
         topicService.updatePraiseCount(5, 81);

@@ -22,6 +22,9 @@
     <result column="praise_count" property="praiseCount" jdbcType="INTEGER" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="publish_time" property="publishTime" jdbcType="TIMESTAMP" />
+    <result column="last_replyer_id" property="lastReplyerId" jdbcType="BIGINT" />
+    <result column="last_replyer" property="lastReplyer" jdbcType="VARCHAR" />
+    <result column="last_reply_time" property="lastReplyTime" jdbcType="TIMESTAMP" />
     <result column="delete_flag" property="deleteFlag" jdbcType="CHAR" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="cn.flus.cms.core.dao.domain.TopicEntity" extends="BaseResultMap" >
@@ -30,7 +33,8 @@
   <sql id="Base_Column_List" >
     id, category_id, title, summary, thumbnail, keywords, author_id, author, source, 
     status, link_out, link_url, allow_user_post, allow_comments, place_top, view_count, 
-    comments_count, praise_count, create_time, publish_time, delete_flag
+    comments_count, praise_count, create_time, publish_time, last_replyer_id, 
+    last_replyer, last_reply_time, delete_flag
   </sql>
   <sql id="Blob_Column_List" >
     content
@@ -71,6 +75,9 @@
     <if test="orderFiled == 'publishTime'">
         publish_time
     </if>
+    <if test="orderFiled == 'lastReplyTime'">
+        last_reply_time
+    </if>
     <if test="orderType == 'desc'">
         desc
     </if>
@@ -100,7 +107,8 @@
       status, link_out, link_url, 
       allow_user_post, allow_comments, place_top, 
       view_count, comments_count, praise_count, 
-      create_time, publish_time, delete_flag, 
+      create_time, publish_time, last_replyer_id, 
+      last_replyer, last_reply_time, delete_flag, 
       content)
     values (#{id,jdbcType=INTEGER}, #{categoryId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, 
       #{summary,jdbcType=VARCHAR}, #{thumbnail,jdbcType=VARCHAR}, #{keywords,jdbcType=VARCHAR}, 
@@ -108,7 +116,8 @@
       #{status,jdbcType=INTEGER}, #{linkOut,jdbcType=CHAR}, #{linkUrl,jdbcType=VARCHAR}, 
       #{allowUserPost,jdbcType=CHAR}, #{allowComments,jdbcType=CHAR}, #{placeTop,jdbcType=CHAR}, 
       #{viewCount,jdbcType=INTEGER}, #{commentsCount,jdbcType=INTEGER}, #{praiseCount,jdbcType=INTEGER}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{publishTime,jdbcType=TIMESTAMP}, #{deleteFlag,jdbcType=CHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{publishTime,jdbcType=TIMESTAMP}, #{lastReplyerId,jdbcType=BIGINT}, 
+      #{lastReplyer,jdbcType=VARCHAR}, #{lastReplyTime,jdbcType=TIMESTAMP}, #{deleteFlag,jdbcType=CHAR}, 
       #{content,jdbcType=LONGVARCHAR})
   </insert>
   
@@ -171,6 +180,15 @@
       </if>
       <if test="publishTime != null" >
         publish_time = #{publishTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastReplyerId != null" >
+        last_replyer_id = #{lastReplyerId,jdbcType=BIGINT},
+      </if>
+      <if test="lastReplyer != null" >
+        last_replyer = #{lastReplyer,jdbcType=VARCHAR},
+      </if>
+      <if test="lastReplyTime != null" >
+        last_reply_time = #{lastReplyTime,jdbcType=TIMESTAMP},
       </if>
       <if test="deleteFlag != null" >
         delete_flag = #{deleteFlag,jdbcType=CHAR},

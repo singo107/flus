@@ -8,7 +8,7 @@ import java.util.Map;
  */
 public enum TopticOrderFiled {
 
-    VC("viewCount"), CC("commentsCount"), PC("praiseCount"), CT("createTime"), PT("publishTime");
+    VC("viewCount"), CC("commentsCount"), PC("praiseCount"), CT("createTime"), PT("publishTime"), RT("lastReplyTime");
 
     private String code;
 
@@ -24,6 +24,7 @@ public enum TopticOrderFiled {
         map.put(TopticOrderFiled.PC.getCode(), TopticOrderFiled.PC);
         map.put(TopticOrderFiled.CT.getCode(), TopticOrderFiled.CT);
         map.put(TopticOrderFiled.PT.getCode(), TopticOrderFiled.PT);
+        map.put(TopticOrderFiled.RT.getCode(), TopticOrderFiled.RT);
     }
 
     public String getCode() {

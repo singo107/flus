@@ -14,6 +14,8 @@ public class TopicEntity {
 
     private String  thumbnail;
 
+    private String  content;
+
     private String  keywords;
 
     private Long    authorId;
@@ -44,9 +46,13 @@ public class TopicEntity {
 
     private Date    publishTime;
 
-    private String  deleteFlag;
+    private Long    lastReplyerId;
 
-    private String  content;
+    private String  lastReplyer;
+
+    private Date    lastReplyTime;
+
+    private String  deleteFlag;
 
     public Integer getId() {
         return id;
@@ -86,6 +92,14 @@ public class TopicEntity {
 
     public void setThumbnail(String thumbnail) {
         this.thumbnail = thumbnail;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public String getKeywords() {
@@ -208,20 +222,36 @@ public class TopicEntity {
         this.publishTime = publishTime;
     }
 
+    public Long getLastReplyerId() {
+        return lastReplyerId;
+    }
+
+    public void setLastReplyerId(Long lastReplyerId) {
+        this.lastReplyerId = lastReplyerId;
+    }
+
+    public String getLastReplyer() {
+        return lastReplyer;
+    }
+
+    public void setLastReplyer(String lastReplyer) {
+        this.lastReplyer = lastReplyer;
+    }
+
+    public Date getLastReplyTime() {
+        return lastReplyTime;
+    }
+
+    public void setLastReplyTime(Date lastReplyTime) {
+        this.lastReplyTime = lastReplyTime;
+    }
+
     public String getDeleteFlag() {
         return deleteFlag;
     }
 
     public void setDeleteFlag(String deleteFlag) {
         this.deleteFlag = deleteFlag;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
     }
 
     @Override
