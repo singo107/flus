@@ -8,7 +8,9 @@
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="INTEGER" />
     <result column="allow_topic" property="allowTopic" jdbcType="CHAR" />
+    <result column="topic_audit" property="topicAudit" jdbcType="CHAR" />
     <result column="allow_reply" property="allowReply" jdbcType="CHAR" />
+    <result column="reply_audit" property="replyAudit" jdbcType="CHAR" />
     <result column="weight" property="weight" jdbcType="INTEGER" />
     <result column="creator_id" property="creatorId" jdbcType="BIGINT" />
     <result column="creator" property="creator" jdbcType="VARCHAR" />
@@ -16,8 +18,8 @@
     <result column="delete_flag" property="deleteFlag" jdbcType="CHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, parent_id, depth, name, status, allow_topic, allow_reply, weight, creator_id, creator, 
-    create_time, delete_flag
+    id, parent_id, depth, name, status, allow_topic, topic_audit, allow_reply, reply_audit,
+    weight, creator_id, creator, create_time, delete_flag
   </sql>
   
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
@@ -46,13 +48,14 @@
       select last_insert_id()
     </selectKey>
     insert into category (id, parent_id, depth, 
-      name, status, allow_topic, allow_reply, 
-      weight, creator_id, creator, 
-      create_time, delete_flag)
+      name, status, allow_topic, topic_audit,
+      allow_reply, reply_audit, weight, 
+      creator_id, creator, create_time, delete_flag)
     values (#{id,jdbcType=INTEGER}, #{parentId,jdbcType=INTEGER}, #{depth,jdbcType=INTEGER}, 
       #{name,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{allowTopic,jdbcType=CHAR}, 
-      #{allowReply,jdbcType=CHAR}, #{weight,jdbcType=INTEGER}, #{creatorId,jdbcType=BIGINT}, 
-      #{creator,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{deleteFlag,jdbcType=CHAR})
+      #{topicAudit,jdbcType=CHAR}, #{allowReply,jdbcType=CHAR}, #{replyAudit,jdbcType=CHAR}, 
+      #{weight,jdbcType=INTEGER}, #{creatorId,jdbcType=BIGINT}, #{creator,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{deleteFlag,jdbcType=CHAR})
   </insert>
   
   <update id="updateByPrimaryKeySelective" parameterType="cn.flus.cms.core.dao.domain.CategoryEntity" >
@@ -73,8 +76,14 @@
       <if test="allowTopic != null" >
         allow_topic = #{allowTopic,jdbcType=CHAR},
       </if>
+      <if test="topicAudit != null" >
+        topic_audit = #{topicAudit,jdbcType=CHAR},
+      </if>
       <if test="allowReply != null" >
         allow_reply = #{allowReply,jdbcType=CHAR},
+      </if>
+      <if test="replyAudit != null" >
+        reply_audit = #{replyAudit,jdbcType=CHAR},
       </if>
       <if test="weight != null" >
         weight = #{weight,jdbcType=INTEGER},

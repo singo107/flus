@@ -2,7 +2,6 @@ DROP DATABASE IF EXISTS `flus_cms`;
 CREATE DATABASE IF NOT EXISTS `flus_cms`;
 USE `flus_cms`;
 
-
 DROP TABLE IF EXISTS `attachment`;
 CREATE TABLE IF NOT EXISTS `attachment` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -23,8 +22,10 @@ CREATE TABLE IF NOT EXISTS `category` (
   `depth` int(11) NOT NULL COMMENT '栏目深度',
   `name` varchar(32) NOT NULL COMMENT '栏目名称',
   `status` int(11) NOT NULL COMMENT '状态',
-  `allow_topic` char(1) NOT NULL COMMENT '栏目是否允许发表主题',
-  `allow_reply` char(1) DEFAULT NULL COMMENT '本栏目是否允许回复',
+  `allow_topic` char(1) NOT NULL COMMENT '本栏目是否允许发表主题',
+  `topic_audit` char(1) NOT NULL COMMENT '本栏目发表的主题是否需要审核',
+  `allow_reply` char(1) NOT NULL COMMENT '本栏目是否允许回复',
+  `reply_audit` char(1) NOT NULL COMMENT '本栏目的回复是否需要审核',
   `weight` int(11) DEFAULT NULL COMMENT '排序',
   `creator_id` bigint(64) NOT NULL COMMENT '创建者ID',
   `creator` varchar(64) DEFAULT NULL COMMENT '创建者',
@@ -64,7 +65,7 @@ CREATE TABLE IF NOT EXISTS `topic` (
   `status` int(11) NOT NULL COMMENT '状态',
   `link_out` char(1) DEFAULT NULL COMMENT '是否为外链',
   `link_url` varchar(128) DEFAULT NULL COMMENT '外链地址',
-  `allow_reply` char(1) DEFAULT NULL COMMENT '是否允许回复',
+  `allow_reply` char(1) NOT NULL COMMENT '是否允许回复',
   `place_top` char(1) DEFAULT NULL COMMENT '是否置顶',
   `view_count` int(11) DEFAULT NULL COMMENT '查看次数',
   `reply_count` int(11) DEFAULT NULL COMMENT '评论条数',

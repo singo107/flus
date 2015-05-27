@@ -28,16 +28,18 @@ public class CategoryServiceImpl implements CategoryService {
     private CategoryDao          categoryDao;
 
     @Override
-    public CategoryEntity add(String name, Integer parentId, Boolean allowTopic, Boolean allowReply, Integer weight,
-                              Long creatorId, String creator) {
+    public CategoryEntity add(String name, Integer parentId, Boolean allowTopic, Boolean topicAudit,
+                              Boolean allowReply, Boolean replyAudit, Integer weight, Long creatorId, String creator) {
 
         // 判断参数
         Assert.hasText(name);
         Assert.notNull(allowTopic);
         Assert.notNull(allowReply);
+        Assert.notNull(topicAudit);
+        Assert.notNull(replyAudit);
         Assert.notNull(creatorId);
         Assert.hasText(creator);
-        
+
         // 设置根节点的父亲ID
         if (parentId == null || parentId <= 0) {
             parentId = ROOT_PATENT_ID;
@@ -70,6 +72,16 @@ public class CategoryServiceImpl implements CategoryService {
         } else {
             category.setAllowReply(YesOrNo.NO.getCode());
         }
+        if (topicAudit) {
+            category.setTopicAudit(YesOrNo.YES.getCode());
+        } else {
+            category.setTopicAudit(YesOrNo.NO.getCode());
+        }
+        if (replyAudit) {
+            category.setReplyAudit(YesOrNo.YES.getCode());
+        } else {
+            category.setReplyAudit(YesOrNo.NO.getCode());
+        }
         category.setWeight(weight);
         category.setCreatorId(creatorId);
         category.setCreator(creator);
@@ -84,7 +96,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryEntity update(Integer id, String name, Integer parentId, Integer status, Boolean allowTopic,
-                                 Boolean allowReply, Integer weight) {
+                                 Boolean topicAudit, Boolean allowReply, Boolean replyAudit, Integer weight) {
         // 判断参数
         Assert.notNull(id);
 
@@ -144,6 +156,20 @@ public class CategoryServiceImpl implements CategoryService {
                 category.setAllowReply(YesOrNo.YES.getCode());
             } else {
                 category.setAllowReply(YesOrNo.NO.getCode());
+            }
+        }
+        if (topicAudit != null) {
+            if (topicAudit) {
+                category.setTopicAudit(YesOrNo.YES.getCode());
+            } else {
+                category.setTopicAudit(YesOrNo.NO.getCode());
+            }
+        }
+        if (replyAudit != null) {
+            if (replyAudit) {
+                category.setReplyAudit(YesOrNo.YES.getCode());
+            } else {
+                category.setReplyAudit(YesOrNo.NO.getCode());
             }
         }
 

@@ -10,7 +10,7 @@ import java.util.Map;
  */
 public enum ReplyStatus {
 
-    SHOW(1, "显示"), HIDDEN(0, "隐藏");
+    TOAUDIT(1, "待审核"), PASSED(0, "审核通过");
 
     private Integer value;
     private String  display;
@@ -23,8 +23,8 @@ public enum ReplyStatus {
     private static final Map<Integer, ReplyStatus> map = new HashMap<Integer, ReplyStatus>();
 
     static {
-        map.put(ReplyStatus.SHOW.getValue(), ReplyStatus.SHOW);
-        map.put(ReplyStatus.HIDDEN.getValue(), ReplyStatus.HIDDEN);
+        map.put(ReplyStatus.TOAUDIT.getValue(), ReplyStatus.TOAUDIT);
+        map.put(ReplyStatus.PASSED.getValue(), ReplyStatus.PASSED);
     }
 
     public Integer getValue() {

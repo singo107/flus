@@ -12,14 +12,16 @@ public interface CategoryService {
      * @param name
      * @param parentId
      * @param allowTopic
+     * @param topicAudit
      * @param allowReply
+     * @param replyAudit
      * @param weight
      * @param creatorId
      * @param creator
      * @return
      */
-    CategoryEntity add(String name, Integer parentId, Boolean allowTopic, Boolean allowReply, Integer weight,
-                       Long creatorId, String creator);
+    CategoryEntity add(String name, Integer parentId, Boolean allowTopic, Boolean topicAudit, Boolean allowReply,
+                       Boolean replyAudit, Integer weight, Long creatorId, String creator);
 
     /**
      * 修改一个节点
@@ -29,12 +31,14 @@ public interface CategoryService {
      * @param parentId
      * @param status
      * @param allowTopic
+     * @param topicAudit
      * @param allowReply
+     * @param replyAudit
      * @param weight
      * @return
      */
     CategoryEntity update(Integer id, String name, Integer parentId, Integer status, Boolean allowTopic,
-                          Boolean allowReply, Integer weight);
+                          Boolean topicAudit, Boolean allowReply, Boolean replyAudit, Integer weight);
 
     /**
      * 读取单个节点

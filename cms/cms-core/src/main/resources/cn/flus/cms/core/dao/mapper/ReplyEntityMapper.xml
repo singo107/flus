@@ -45,7 +45,7 @@
       and status = #{status,jdbcType=INTEGER}
     </if>
     and delete_flag = 'n'
-    order by recommend desc
+    order by recommend desc, create_time desc
     limit #{start}, #{size}
   </select>
   <select id="countSelectByOrderdTopicId" resultType="java.lang.Integer" >
