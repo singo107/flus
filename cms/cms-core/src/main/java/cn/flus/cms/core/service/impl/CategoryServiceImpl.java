@@ -28,15 +28,16 @@ public class CategoryServiceImpl implements CategoryService {
     private CategoryDao          categoryDao;
 
     @Override
-    public CategoryEntity add(String name, Integer parentId, Boolean comments, Integer weight, Long creatorId,
-                              String creator) {
+    public CategoryEntity add(String name, Integer parentId, Boolean allowTopic, Boolean allowReply, Integer weight,
+                              Long creatorId, String creator) {
 
         // 判断参数
         Assert.hasText(name);
-        Assert.notNull(comments);
+        Assert.notNull(allowTopic);
+        Assert.notNull(allowReply);
         Assert.notNull(creatorId);
         Assert.hasText(creator);
-
+        
         // 设置根节点的父亲ID
         if (parentId == null || parentId <= 0) {
             parentId = ROOT_PATENT_ID;
@@ -59,10 +60,15 @@ public class CategoryServiceImpl implements CategoryService {
         category.setDepth(depth);
         category.setName(name);
         category.setStatus(CategoryStatus.ENABLE.getValue());
-        if (comments) {
-            category.setAllowComments(YesOrNo.YES.getCode());
+        if (allowTopic) {
+            category.setAllowTopic(YesOrNo.YES.getCode());
         } else {
-            category.setAllowComments(YesOrNo.NO.getCode());
+            category.setAllowTopic(YesOrNo.NO.getCode());
+        }
+        if (allowReply) {
+            category.setAllowReply(YesOrNo.YES.getCode());
+        } else {
+            category.setAllowReply(YesOrNo.NO.getCode());
         }
         category.setWeight(weight);
         category.setCreatorId(creatorId);
@@ -77,8 +83,8 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public CategoryEntity update(Integer id, String name, Integer parentId, Integer status, Boolean comments,
-                                 Integer weight) {
+    public CategoryEntity update(Integer id, String name, Integer parentId, Integer status, Boolean allowTopic,
+                                 Boolean allowReply, Integer weight) {
         // 判断参数
         Assert.notNull(id);
 
@@ -126,11 +132,18 @@ public class CategoryServiceImpl implements CategoryService {
         }
 
         // 修改评论状态位
-        if (comments != null) {
-            if (comments) {
-                category.setAllowComments(YesOrNo.YES.getCode());
+        if (allowTopic != null) {
+            if (allowTopic) {
+                category.setAllowTopic(YesOrNo.YES.getCode());
             } else {
-                category.setAllowComments(YesOrNo.NO.getCode());
+                category.setAllowTopic(YesOrNo.NO.getCode());
+            }
+        }
+        if (allowReply != null) {
+            if (allowReply) {
+                category.setAllowReply(YesOrNo.YES.getCode());
+            } else {
+                category.setAllowReply(YesOrNo.NO.getCode());
             }
         }
 

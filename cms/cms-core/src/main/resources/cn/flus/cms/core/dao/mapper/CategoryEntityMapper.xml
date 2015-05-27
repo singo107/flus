@@ -7,7 +7,8 @@
     <result column="depth" property="depth" jdbcType="INTEGER" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="INTEGER" />
-    <result column="allow_comments" property="allowComments" jdbcType="CHAR" />
+    <result column="allow_topic" property="allowTopic" jdbcType="CHAR" />
+    <result column="allow_reply" property="allowReply" jdbcType="CHAR" />
     <result column="weight" property="weight" jdbcType="INTEGER" />
     <result column="creator_id" property="creatorId" jdbcType="BIGINT" />
     <result column="creator" property="creator" jdbcType="VARCHAR" />
@@ -15,7 +16,7 @@
     <result column="delete_flag" property="deleteFlag" jdbcType="CHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, parent_id, depth, name, status, allow_comments, weight, creator_id, creator, 
+    id, parent_id, depth, name, status, allow_topic, allow_reply, weight, creator_id, creator, 
     create_time, delete_flag
   </sql>
   
@@ -45,13 +46,13 @@
       select last_insert_id()
     </selectKey>
     insert into category (id, parent_id, depth, 
-      name, status, allow_comments, 
+      name, status, allow_topic, allow_reply, 
       weight, creator_id, creator, 
       create_time, delete_flag)
     values (#{id,jdbcType=INTEGER}, #{parentId,jdbcType=INTEGER}, #{depth,jdbcType=INTEGER}, 
-      #{name,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{allowComments,jdbcType=CHAR}, 
-      #{weight,jdbcType=INTEGER}, #{creatorId,jdbcType=BIGINT}, #{creator,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{deleteFlag,jdbcType=CHAR})
+      #{name,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{allowTopic,jdbcType=CHAR}, 
+      #{allowReply,jdbcType=CHAR}, #{weight,jdbcType=INTEGER}, #{creatorId,jdbcType=BIGINT}, 
+      #{creator,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{deleteFlag,jdbcType=CHAR})
   </insert>
   
   <update id="updateByPrimaryKeySelective" parameterType="cn.flus.cms.core.dao.domain.CategoryEntity" >
@@ -69,8 +70,11 @@
       <if test="status != null" >
         status = #{status,jdbcType=INTEGER},
       </if>
-      <if test="allowComments != null" >
-        allow_comments = #{allowComments,jdbcType=CHAR},
+      <if test="allowTopic != null" >
+        allow_topic = #{allowTopic,jdbcType=CHAR},
+      </if>
+      <if test="allowReply != null" >
+        allow_reply = #{allowReply,jdbcType=CHAR},
       </if>
       <if test="weight != null" >
         weight = #{weight,jdbcType=INTEGER},

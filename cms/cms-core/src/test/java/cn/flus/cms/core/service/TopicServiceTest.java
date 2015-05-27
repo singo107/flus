@@ -34,7 +34,7 @@ public class TopicServiceTest {
     public void tearDown() throws Exception {
     }
 
-    // @Test
+    @Test
     public void test1() {
         TopicEntity topic = new TopicEntity();
         topic.setCategoryId(17);
@@ -49,11 +49,10 @@ public class TopicServiceTest {
         topic.setStatus(TopicStatus.DRAFT.getValue());
         topic.setLinkOut(YesOrNo.NO.getCode());
         topic.setLinkUrl("linkUrl");
-        topic.setAllowUserPost(YesOrNo.NO.getCode());
-        topic.setAllowComments(YesOrNo.NO.getCode());
+        topic.setAllowReply(YesOrNo.NO.getCode());
         topic.setPlaceTop(YesOrNo.NO.getCode());
         topic.setViewCount(0);
-        topic.setCommentsCount(0);
+        topic.setReplyCount(0);
         topic.setPraiseCount(0);
         topic.setCreateTime(new Date());
         topic.setPublishTime(new Date());

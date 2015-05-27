@@ -14,7 +14,9 @@ public class CategoryEntity implements Comparable<CategoryEntity> {
 
     private Integer status;
 
-    private String  allowComments;
+    private String  allowTopic;
+
+    private String  allowReply;
 
     private Integer weight;
 
@@ -66,12 +68,20 @@ public class CategoryEntity implements Comparable<CategoryEntity> {
         this.status = status;
     }
 
-    public String getAllowComments() {
-        return allowComments;
+    public String getAllowTopic() {
+        return allowTopic;
     }
 
-    public void setAllowComments(String allowComments) {
-        this.allowComments = allowComments;
+    public void setAllowTopic(String allowTopic) {
+        this.allowTopic = allowTopic;
+    }
+
+    public String getAllowReply() {
+        return allowReply;
+    }
+
+    public void setAllowReply(String allowReply) {
+        this.allowReply = allowReply;
     }
 
     public Integer getWeight() {

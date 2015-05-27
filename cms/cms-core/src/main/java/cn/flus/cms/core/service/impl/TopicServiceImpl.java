@@ -132,7 +132,7 @@ public class TopicServiceImpl implements TopicService {
         }
 
         // 修改
-        topic.setCommentsCount(increase + topic.getCommentsCount());
+        topic.setReplyCount(increase + topic.getReplyCount());
         update(topic);
     }
 

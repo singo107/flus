@@ -30,15 +30,13 @@ public class TopicEntity {
 
     private String  linkUrl;
 
-    private String  allowUserPost;
-
-    private String  allowComments;
+    private String  allowReply;
 
     private String  placeTop;
 
     private Integer viewCount;
 
-    private Integer commentsCount;
+    private Integer replyCount;
 
     private Integer praiseCount;
 
@@ -158,20 +156,12 @@ public class TopicEntity {
         this.linkUrl = linkUrl;
     }
 
-    public String getAllowUserPost() {
-        return allowUserPost;
+    public String getAllowReply() {
+        return allowReply;
     }
 
-    public void setAllowUserPost(String allowUserPost) {
-        this.allowUserPost = allowUserPost;
-    }
-
-    public String getAllowComments() {
-        return allowComments;
-    }
-
-    public void setAllowComments(String allowComments) {
-        this.allowComments = allowComments;
+    public void setAllowReply(String allowReply) {
+        this.allowReply = allowReply;
     }
 
     public String getPlaceTop() {
@@ -190,12 +180,12 @@ public class TopicEntity {
         this.viewCount = viewCount;
     }
 
-    public Integer getCommentsCount() {
-        return commentsCount;
+    public Integer getReplyCount() {
+        return replyCount;
     }
 
-    public void setCommentsCount(Integer commentsCount) {
-        this.commentsCount = commentsCount;
+    public void setReplyCount(Integer replyCount) {
+        this.replyCount = replyCount;
     }
 
     public Integer getPraiseCount() {

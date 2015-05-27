@@ -27,15 +27,14 @@ public class CategoryServiceTest {
     public void tearDown() throws Exception {
     }
 
-    // @Test
+    @Test
     public void test1() {
         String name = "2-3-1";
-        Integer parentId = 20;
-        Boolean comments = true;
+        Integer parentId = 0;
         Long creatorId = 1l;
         String creator = "singo";
         Integer weight = 1;
-        CategoryEntity categoryEntity = categoryService.add(name, parentId, comments, weight, creatorId, creator);
+        CategoryEntity categoryEntity = categoryService.add(name, parentId, true, true, weight, creatorId, creator);
         System.out.println(categoryEntity);
     }
 
@@ -60,14 +59,14 @@ public class CategoryServiceTest {
         categoryService.delete(17);
     }
 
-    @Test
+    // @Test
     public void test5() {
         List<CategoryEntity> list = categoryService.getAllSorted(false);
         for (CategoryEntity e : list) {
             System.out.println(e.getName());
         }
         System.out.println("----");
-        categoryService.update(17, null, 16, null, null, null);
+        categoryService.update(17, null, 16, null, null, null, null);
         list = categoryService.getAllSorted(true);
         for (CategoryEntity e : list) {
             System.out.println(e.getName());

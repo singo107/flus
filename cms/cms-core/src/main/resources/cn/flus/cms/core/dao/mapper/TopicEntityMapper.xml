@@ -14,11 +14,10 @@
     <result column="status" property="status" jdbcType="INTEGER" />
     <result column="link_out" property="linkOut" jdbcType="CHAR" />
     <result column="link_url" property="linkUrl" jdbcType="VARCHAR" />
-    <result column="allow_user_post" property="allowUserPost" jdbcType="CHAR" />
-    <result column="allow_comments" property="allowComments" jdbcType="CHAR" />
+    <result column="allow_reply" property="allowReply" jdbcType="CHAR" />
     <result column="place_top" property="placeTop" jdbcType="CHAR" />
     <result column="view_count" property="viewCount" jdbcType="INTEGER" />
-    <result column="comments_count" property="commentsCount" jdbcType="INTEGER" />
+    <result column="reply_count" property="replyCount" jdbcType="INTEGER" />
     <result column="praise_count" property="praiseCount" jdbcType="INTEGER" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="publish_time" property="publishTime" jdbcType="TIMESTAMP" />
@@ -32,9 +31,9 @@
   </resultMap>
   <sql id="Base_Column_List" >
     id, category_id, title, summary, thumbnail, keywords, author_id, author, source, 
-    status, link_out, link_url, allow_user_post, allow_comments, place_top, view_count, 
-    comments_count, praise_count, create_time, publish_time, last_replyer_id, 
-    last_replyer, last_reply_time, delete_flag
+    status, link_out, link_url, allow_reply, place_top, view_count, reply_count, 
+    praise_count, create_time, publish_time, last_replyer_id, last_replyer, 
+    last_reply_time, delete_flag
   </sql>
   <sql id="Blob_Column_List" >
     content
@@ -63,8 +62,8 @@
     <if test="orderFiled == 'viewCount'">
         view_count
     </if>
-    <if test="orderFiled == 'commentsCount'">
-        comments_count
+    <if test="orderFiled == 'replyCount'">
+        reply_count
     </if>
     <if test="orderFiled == 'praiseCount'">
         praise_count
@@ -103,9 +102,8 @@
     insert into topic (id, category_id, title, 
       summary, thumbnail, keywords, 
       author_id, author, source, 
-      status, link_out, link_url, 
-      allow_user_post, allow_comments, place_top, 
-      view_count, comments_count, praise_count, 
+      status, link_out, link_url, allow_reply, place_top, 
+      view_count, reply_count, praise_count, 
       create_time, publish_time, last_replyer_id, 
       last_replyer, last_reply_time, delete_flag, 
       content)
@@ -113,11 +111,10 @@
       #{summary,jdbcType=VARCHAR}, #{thumbnail,jdbcType=VARCHAR}, #{keywords,jdbcType=VARCHAR}, 
       #{authorId,jdbcType=BIGINT}, #{author,jdbcType=VARCHAR}, #{source,jdbcType=VARCHAR}, 
       #{status,jdbcType=INTEGER}, #{linkOut,jdbcType=CHAR}, #{linkUrl,jdbcType=VARCHAR}, 
-      #{allowUserPost,jdbcType=CHAR}, #{allowComments,jdbcType=CHAR}, #{placeTop,jdbcType=CHAR}, 
-      #{viewCount,jdbcType=INTEGER}, #{commentsCount,jdbcType=INTEGER}, #{praiseCount,jdbcType=INTEGER}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{publishTime,jdbcType=TIMESTAMP}, #{lastReplyerId,jdbcType=BIGINT}, 
-      #{lastReplyer,jdbcType=VARCHAR}, #{lastReplyTime,jdbcType=TIMESTAMP}, #{deleteFlag,jdbcType=CHAR}, 
-      #{content,jdbcType=LONGVARCHAR})
+      #{allowReply,jdbcType=CHAR}, #{placeTop,jdbcType=CHAR}, #{viewCount,jdbcType=INTEGER}, 
+      #{replyCount,jdbcType=INTEGER}, #{praiseCount,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{publishTime,jdbcType=TIMESTAMP}, #{lastReplyerId,jdbcType=BIGINT}, #{lastReplyer,jdbcType=VARCHAR}, 
+      #{lastReplyTime,jdbcType=TIMESTAMP}, #{deleteFlag,jdbcType=CHAR}, #{content,jdbcType=LONGVARCHAR})
   </insert>
   
   <update id="updateByPrimaryKeySelective" parameterType="cn.flus.cms.core.dao.domain.TopicEntity" >
@@ -156,11 +153,8 @@
       <if test="linkUrl != null" >
         link_url = #{linkUrl,jdbcType=VARCHAR},
       </if>
-      <if test="allowUserPost != null" >
-        allow_user_post = #{allowUserPost,jdbcType=CHAR},
-      </if>
-      <if test="allowComments != null" >
-        allow_comments = #{allowComments,jdbcType=CHAR},
+      <if test="allowReply != null" >
+        allow_reply = #{allowReply,jdbcType=CHAR},
       </if>
       <if test="placeTop != null" >
         place_top = #{placeTop,jdbcType=CHAR},
@@ -168,8 +162,8 @@
       <if test="viewCount != null" >
         view_count = #{viewCount,jdbcType=INTEGER},
       </if>
-      <if test="commentsCount != null" >
-        comments_count = #{commentsCount,jdbcType=INTEGER},
+      <if test="replyCount != null" >
+        reply_count = #{replyCount,jdbcType=INTEGER},
       </if>
       <if test="praiseCount != null" >
         praise_count = #{praiseCount,jdbcType=INTEGER},
