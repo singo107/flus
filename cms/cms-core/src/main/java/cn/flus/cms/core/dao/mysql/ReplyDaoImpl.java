@@ -40,4 +40,14 @@ public class ReplyDaoImpl implements ReplyDao {
         return replyEntityMapper.updateDeleteFlag(ids);
     }
 
+    @Override
+    public Integer updateStatus(Integer[] ids, Integer status) {
+        return replyEntityMapper.updateStatus(ids, status);
+    }
+
+    @Override
+    public Integer updateRecommend(Integer[] ids, String recommend) {
+        return replyEntityMapper.updateRecommend(ids, recommend);
+    }
+
 }

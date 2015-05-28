@@ -28,6 +28,22 @@ public interface ReplyService {
     PagedList<ReplyEntity> getByTopicId(Integer topicId, Integer status, Page page);
 
     /**
+     * 更新回复的状态
+     * 
+     * @param ids
+     * @param status
+     */
+    void updateStatus(Integer[] ids, Integer status);
+
+    /**
+     * 更新回复的推荐位
+     * 
+     * @param ids
+     * @param recommend
+     */
+    void updateRecommend(Integer[] ids, Boolean recommend);
+
+    /**
      * 批量删除
      * 
      * @param ids

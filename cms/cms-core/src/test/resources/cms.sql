@@ -1,7 +1,22 @@
+-- --------------------------------------------------------
+-- Host:                         127.0.0.1
+-- Server version:               5.5.30 - MySQL Community Server (GPL)
+-- Server OS:                    Win64
+-- HeidiSQL version:             7.0.0.4053
+-- Date/time:                    2015-05-28 13:17:01
+-- --------------------------------------------------------
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8 */;
+/*!40014 SET FOREIGN_KEY_CHECKS=0 */;
+
+-- Dumping database structure for flus_cms
 DROP DATABASE IF EXISTS `flus_cms`;
-CREATE DATABASE IF NOT EXISTS `flus_cms`;
+CREATE DATABASE IF NOT EXISTS `flus_cms` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `flus_cms`;
 
+
+-- Dumping structure for table flus_cms.attachment
 DROP TABLE IF EXISTS `attachment`;
 CREATE TABLE IF NOT EXISTS `attachment` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -15,6 +30,10 @@ CREATE TABLE IF NOT EXISTS `attachment` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- Data exporting was unselected.
+
+
+-- Dumping structure for table flus_cms.category
 DROP TABLE IF EXISTS `category`;
 CREATE TABLE IF NOT EXISTS `category` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -34,6 +53,10 @@ CREATE TABLE IF NOT EXISTS `category` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- Data exporting was unselected.
+
+
+-- Dumping structure for table flus_cms.reply
 DROP TABLE IF EXISTS `reply`;
 CREATE TABLE IF NOT EXISTS `reply` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -50,6 +73,10 @@ CREATE TABLE IF NOT EXISTS `reply` (
   KEY `topic_id` (`topic_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- Data exporting was unselected.
+
+
+-- Dumping structure for table flus_cms.topic
 DROP TABLE IF EXISTS `topic`;
 CREATE TABLE IF NOT EXISTS `topic` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -80,3 +107,7 @@ CREATE TABLE IF NOT EXISTS `topic` (
   KEY `column_id` (`category_id`),
   KEY `user_id` (`author_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Data exporting was unselected.
+/*!40014 SET FOREIGN_KEY_CHECKS=1 */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

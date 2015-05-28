@@ -103,4 +103,10 @@ public class ReplyEntity {
     public void setContent(String content) {
         this.content = content;
     }
+
+    @Override
+    public String toString() {
+        return "ReplyEntity [id=" + id + ", content=" + content + "]";
+    }
+
 }

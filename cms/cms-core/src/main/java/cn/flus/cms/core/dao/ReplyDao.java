@@ -12,4 +12,8 @@ public interface ReplyDao {
 
     Integer updateDeleteFlag(Integer[] ids);
 
+    Integer updateStatus(Integer[] ids, Integer status);
+
+    Integer updateRecommend(Integer[] ids, String recommend);
+
 }

@@ -10,7 +10,7 @@ import java.util.Map;
  */
 public enum ReplyStatus {
 
-    TOAUDIT(1, "待审核"), PASSED(0, "审核通过");
+    TOAUDIT(0, "待审核"), PASSED(1, "审核通过");
 
     private Integer value;
     private String  display;

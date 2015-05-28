@@ -58,9 +58,29 @@
     and delete_flag = 'n'
   </select>
   
+  <update id="updateStatus">
+    update reply 
+    set status = #{status,jdbcType=INTEGER}
+    where id in
+	<foreach collection="ids" item="item" index="index" open="(" separator="," close=")">
+	  #{item}
+	</foreach>
+	and delete_flag = 'n'
+  </update>
+  
+  <update id="updateRecommend">
+    update reply 
+    set recommend = #{recommend,jdbcType=CHAR}
+    where id in
+	<foreach collection="ids" item="item" index="index" open="(" separator="," close=")">
+	  #{item}
+	</foreach>
+	and delete_flag = 'n'
+  </update>
+  
   <update id="updateDeleteFlag">
-    update topic 
-    set reply = 'y'
+    update reply 
+    set delete_flag = 'y'
     where id in
 	<foreach collection="ids" item="item" index="index" open="(" separator="," close=")">
 	  #{item}

@@ -97,4 +97,18 @@ public class ReplyServiceImpl implements ReplyService {
         delete(new Integer[] { id });
     }
 
+    @Override
+    public void updateStatus(Integer[] ids, Integer status) {
+        replyDao.updateStatus(ids, status);
+    }
+
+    @Override
+    public void updateRecommend(Integer[] ids, Boolean recommend) {
+        if (recommend) {
+            replyDao.updateRecommend(ids, YesOrNo.YES.getCode());
+        } else {
+            replyDao.updateRecommend(ids, YesOrNo.NO.getCode());
+        }
+    }
+
 }

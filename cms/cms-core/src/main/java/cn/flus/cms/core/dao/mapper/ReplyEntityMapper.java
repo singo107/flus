@@ -15,6 +15,10 @@ public interface ReplyEntityMapper {
 
     int countSelectByOrderdTopicId(@Param("topicId") Integer topicId, @Param("status") Integer status);
 
+    int updateStatus(@Param("ids") Integer[] ids, @Param("status") Integer status);
+
+    int updateRecommend(@Param("ids") Integer[] ids, @Param("recommend") String recommend);
+
     int updateDeleteFlag(@Param("ids") Integer[] ids);
 
 }
