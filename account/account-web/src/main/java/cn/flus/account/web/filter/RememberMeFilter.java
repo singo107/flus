@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.codec.binary.Base64;
 import org.slf4j.Logger;
@@ -16,9 +17,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.filter.GenericFilterBean;
 
 import cn.flus.account.core.dao.domain.AccountUserEntity;
+import cn.flus.account.core.dto.SigninUser;
 import cn.flus.account.core.service.AccountUserService;
-import cn.flus.account.web.domain.LoginUser;
 import cn.flus.account.web.utils.CookieUtils;
+import cn.flus.account.web.utils.SigninUtils;
+import cn.flus.account.web.utils.SigninExecutor;
 import cn.flus.core.utils.DigestUtils;
 
 @Service("rememberMeFilter")
@@ -26,33 +29,48 @@ public class RememberMeFilter extends GenericFilterBean {
 
     private static final Logger logger              = LoggerFactory.getLogger(RememberMeFilter.class);
 
+    // 记录用户记住登录的唯一键，存放在Cookie中
     private static final String REMEMBER_ME_CK_NAME = "rmb_k";
 
     @Autowired
     private AccountUserService  accountUserService;
 
+    @Autowired
+    private SigninExecutor      signinExecutor;
+
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException,
                                                                                              ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
+        HttpServletResponse httpResponse = (HttpServletResponse) response;
 
-        if (LoginContextHolder.getContext().getLoginUser() == null) {
-
-            // 根据cookie获取记住登录的用户信息
-            LoginUser loginUser = autoLogin(httpRequest);
-            if (loginUser != null) {
-
-                LoginContextHolder.getContext().setLoginUser(loginUser);
-
-                // 保存Session
-                httpRequest.getSession().setAttribute("cuser", loginUser);
-            }
+        // 如果用户已经登录
+        SigninUser signinUser = SigninUtils.get();
+        if (signinUser != null) {
+            chain.doFilter(request, response);
+            return;
         }
 
+        // 根据cookie获取记住的用户信息
+        AccountUserEntity accountUserEntity = get(httpRequest);
+        if (accountUserEntity == null) {
+            chain.doFilter(request, response);
+            return;
+        }
+
+        // 登录
+        signinUser = signinExecutor.signin(accountUserEntity, httpResponse);
+        SigninContextHolder.getContext().setSigninUser(signinUser);
         chain.doFilter(request, response);
     }
 
-    private LoginUser autoLogin(HttpServletRequest httpRequest) {
+    /**
+     * 在cookie中获取用户信息
+     * 
+     * @param httpRequest
+     * @return
+     */
+    private AccountUserEntity get(HttpServletRequest httpRequest) {
 
         // 从request获取cookie
         String cookieValue = CookieUtils.getValue(httpRequest, REMEMBER_ME_CK_NAME);
@@ -81,14 +99,7 @@ public class RememberMeFilter extends GenericFilterBean {
             return null;
         }
 
-        // 返回登录的用户信息
-        LoginUser loginUser = new LoginUser();
-        loginUser.setId(u.getId());
-        loginUser.setLoginname(u.getLoginname());
-        loginUser.setEmail(u.getEmail());
-        loginUser.setMobile(u.getMobile());
-        loginUser.setNickname(u.getNickname());
-        return loginUser;
+        return u;
     }
 
     private String makeTokenSignature(long tokenExpiryTime, int id, String password) {

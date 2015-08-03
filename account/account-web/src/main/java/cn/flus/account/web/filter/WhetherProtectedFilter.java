@@ -1,7 +1,6 @@
 package cn.flus.account.web.filter;
 
 import java.io.IOException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,52 +9,29 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.filter.GenericFilterBean;
 
 import cn.flus.account.web.config.RequestPattern;
 import cn.flus.account.web.config.UnprotectedConfig;
-import cn.flus.account.web.utils.UrlUtils;
 
-@Service("redirect2LoginFilter")
-public class Redirect2LoginFilter extends GenericFilterBean {
+@Service("whetherProtectedFilter")
+public class WhetherProtectedFilter extends GenericFilterBean {
 
     @Autowired
     private UnprotectedConfig           unprotectedConfig;
-    private static List<RequestMatcher> unprotectedRequestMatchers;
 
-    @Value("${path.login}")
-    private String                      loginPath;
+    private static List<RequestMatcher> unprotectedRequestMatchers;
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException,
                                                                                              ServletException {
+        // 检查当前页面是否需要被登录保护
         HttpServletRequest httpRequest = (HttpServletRequest) request;
-        HttpServletResponse httpResponse = (HttpServletResponse) response;
-
-        // 不受登录保护的页面，直接跳过
         boolean unprotected = check(httpRequest);
-        if (unprotected) {
-            chain.doFilter(request, response);
-            return;
-        }
-
-        // 如果用户没有登录
-        if (LoginContextHolder.getContext().getLoginUser() == null) {
-
-            // 读取当前请求的URL，便于登录成功后返回
-            String destUrl = URLEncoder.encode(UrlUtils.buildFullRequestUrl(httpRequest), "utf-8");
-
-            // 拼装登录的url
-            String loginUrl = loginPath + "?dest=" + destUrl;
-            httpResponse.sendRedirect(loginUrl);
-            return;
-        }
-
+        SigninContextHolder.getContext().setNeedProtected(!unprotected);
         chain.doFilter(request, response);
     }
 

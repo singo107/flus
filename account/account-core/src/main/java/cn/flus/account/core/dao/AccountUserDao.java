@@ -7,14 +7,14 @@ import cn.flus.account.core.dao.domain.AccountUserEntity;
  */
 public interface AccountUserDao {
 
-    public Integer insert(AccountUserEntity entity);
+    Integer insert(AccountUserEntity entity);
 
-    public AccountUserEntity get(Integer id);
+    AccountUserEntity get(Integer id);
 
-    public AccountUserEntity getByLoginname(String loginname);
+    AccountUserEntity getByLoginname(String loginname);
 
-    public AccountUserEntity getByEmail(String email);
+    AccountUserEntity getByEmail(String email);
 
-    public AccountUserEntity getByMobile(String mobile);
+    AccountUserEntity getByMobile(String mobile);
 
 }

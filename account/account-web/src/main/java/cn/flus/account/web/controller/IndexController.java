@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
-import cn.flus.account.web.utils.LoginUserUtil;
+import cn.flus.account.web.utils.SigninUtils;
 
 /**
  * Homepage
@@ -31,7 +31,7 @@ public class IndexController extends BaseController {
 
     @RequestMapping(value = "/info", method = RequestMethod.GET)
     public ModelAndView info(ModelMap model) {
-        model.addAttribute("user", LoginUserUtil.get());
+        model.addAttribute("user", SigninUtils.get());
         return new ModelAndView("info");
     }
 }

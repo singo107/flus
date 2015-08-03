@@ -11,7 +11,7 @@
 
 	<context:property-placeholder location="classpath:default.properties"
 		ignore-resource-not-found="true" file-encoding="utf-8" />
-	<context:component-scan base-package="cn.flus.account">
+	<context:component-scan base-package="cn.flus.cms">
 		<context:exclude-filter type="annotation"
 			expression="org.springframework.stereotype.Controller" />
 		<context:exclude-filter type="annotation"
@@ -19,12 +19,5 @@
 	</context:component-scan>
 	<context:annotation-config />
 
-	<util:list id="accountFilterList">
-		<ref bean="loginContextStorageFilter" />
-		<ref bean="rememberMeFilter" />
-		<ref bean="redirect2LoginFilter" />
-	</util:list>
-
 	<import resource="classpath:spring-mysql-config.xml" />
-	<import resource="classpath:spring-login-unprotected.xml" />
 </beans>

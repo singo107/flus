@@ -3,6 +3,8 @@ package cn.flus.account.core.service;
 import cn.flus.account.core.dao.domain.AccountUserEntity;
 
 /**
+ * 用户
+ * 
  * @author singo
  */
 public interface AccountUserService {

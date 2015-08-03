@@ -8,7 +8,7 @@ import org.apache.commons.lang.ArrayUtils;
 /**
  * Cookie工具
  * 
- * @author zhouxing 2013-10-18
+ * @author singo
  */
 public class CookieUtils {
 

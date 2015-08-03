@@ -1,18 +1,29 @@
-package cn.flus.account.web.domain;
+package cn.flus.account.core.dto;
+
+import java.io.Serializable;
 
 /**
- * 存放在Session中的用户信息
+ * 登录的用户
  * 
  * @author singo
  */
-public class LoginUser {
+public class SigninUser implements Serializable {
 
-    private Integer id;
-    private String  loginname;
-    private String  nickname;
+    private static final long serialVersionUID = 5562136997706961025L;
 
-    private String  email;
-    private String  mobile;
+    private Integer           id;
+    private String            loginname;
+    private String            nickname;
+
+    private String            email;
+    private String            mobile;
+
+    public SigninUser() {
+    }
+
+    public SigninUser(Integer id) {
+        this.id = id;
+    }
 
     public Integer getId() {
         return id;
@@ -56,7 +67,6 @@ public class LoginUser {
 
     @Override
     public String toString() {
-        return "LoginUser [id=" + id + ", loginname=" + loginname + ", nickname=" + nickname + ", email=" + email
-               + ", mobile=" + mobile + "]";
+        return "SigninUser [id=" + id + ", loginname=" + loginname + "]";
     }
 }

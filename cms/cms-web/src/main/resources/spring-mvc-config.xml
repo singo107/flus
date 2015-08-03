@@ -9,7 +9,7 @@
 	<mvc:resources location="classpath:/resources/" mapping="/resources/**" />
 	<context:property-placeholder location="classpath:default.properties"
 		file-encoding="utf-8" />
-	<context:component-scan base-package="cn.flus.account.web.controller" />
+	<context:component-scan base-package="cn.flus.cms.web.controller" />
 	<mvc:annotation-driven />
 	<mvc:default-servlet-handler />
 

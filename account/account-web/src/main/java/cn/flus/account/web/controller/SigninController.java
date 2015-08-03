@@ -14,12 +14,12 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import cn.flus.account.core.dao.domain.AccountUserEntity;
 import cn.flus.account.core.service.AccountUserService;
-import cn.flus.account.web.domain.LoginUser;
+import cn.flus.account.web.utils.SigninExecutor;
 
 /**
- * login
+ * 登录
  * 
- * @author zhouxing
+ * @author singo
  */
 @Controller
 @RequestMapping("/")
@@ -27,6 +27,9 @@ public class SigninController extends BaseController {
 
     @Autowired
     private AccountUserService accountUserService;
+
+    @Autowired
+    private SigninExecutor     signinExecutor;
 
     @RequestMapping(value = "/signin", method = RequestMethod.GET)
     public ModelAndView signinPage(@RequestParam(value = "dest", required = false) String dest,
@@ -50,21 +53,20 @@ public class SigninController extends BaseController {
 
         // 检查密码是否正确
         boolean match = accountUserService.checkPassword(accountUserEntity, password);
-        if (match) {
-            LoginUser loginUser = new LoginUser();
-            loginUser.setId(accountUserEntity.getId());
-            loginUser.setLoginname(accountUserEntity.getLoginname());
-            request.getSession().setAttribute("cuser", loginUser);
-
-            String redirectUrl = null;
-            if (dest == null || dest.length() <= 0) {
-                redirectUrl = "index";
-            } else {
-                redirectUrl = dest;
-            }
-            return new ModelAndView(new RedirectView(redirectUrl));
-        } else {
+        if (!match) {
             return new ModelAndView(new RedirectView("signin?error=2"));
         }
+
+        // 登录
+        signinExecutor.signin(accountUserEntity, response);
+
+        // 跳转
+        String redirectUrl = null;
+        if (dest == null || dest.length() <= 0) {
+            redirectUrl = "index";
+        } else {
+            redirectUrl = dest;
+        }
+        return new ModelAndView(new RedirectView(redirectUrl));
     }
 }

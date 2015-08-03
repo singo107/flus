@@ -20,11 +20,13 @@
 	<context:annotation-config />
 
 	<util:list id="accountFilterList">
-		<ref bean="loginContextStorageFilter" />
+		<ref bean="signinContextStorageFilter" />
 		<ref bean="rememberMeFilter" />
-		<ref bean="redirect2LoginFilter" />
+		<ref bean="whetherProtectedFilter" />
+		<ref bean="signinCheckFilter" />
 	</util:list>
 
 	<import resource="classpath:spring-mysql-config.xml" />
+	<import resource="classpath:spring-redis-config.xml" />
 	<import resource="classpath:spring-login-unprotected.xml" />
 </beans>

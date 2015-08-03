@@ -86,6 +86,7 @@ public class AccountUserServiceImpl implements AccountUserService {
         // 如果用户名是Mobile，则设置mobile
         if (LoginnameUtils.isMobile(loginname)) {
             entity.setMobile(loginname);
+            entity.setMobileVerified(VerifyTag.NOT_VERIFIED.getCode());
         }
 
         // 添加到数据库
