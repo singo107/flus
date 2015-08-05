@@ -30,8 +30,10 @@ public class SigninUserServiceTest {
     public void test() {
         String key = "abc";
         SigninUser signinUser = new SigninUser(1);
+        signinUser.setLoginname("singo");
         signinUserService.put(key, signinUser);
         SigninUser signinUserAfter = signinUserService.get(key);
         Assert.assertEquals(signinUser.getId(), signinUserAfter.getId());
+        Assert.assertEquals(signinUser.getLoginname(), signinUserAfter.getLoginname());
     }
 }

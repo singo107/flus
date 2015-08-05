@@ -1,49 +1,57 @@
 package cn.flus.account.core.dao.redis;
 
-import org.springframework.dao.DataAccessException;
-import org.springframework.data.redis.connection.RedisConnection;
-import org.springframework.data.redis.core.RedisCallback;
-import org.springframework.data.redis.serializer.RedisSerializer;
+import javax.annotation.PostConstruct;
+
+import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.data.redis.serializer.JacksonJsonRedisSerializer;
 import org.springframework.stereotype.Service;
 
 import cn.flus.account.core.dao.SigninUserDao;
 import cn.flus.account.core.dto.SigninUser;
 
 @Service("signinUserDao")
-public class SigninUserDaoImpl extends AbstractBaseRedisDao<String, SigninUser> implements SigninUserDao {
+public class SigninUserDaoImpl implements SigninUserDao {
+
+    @Autowired
+    private RedisTemplate<String, SigninUser>   template;
+
+    private ValueOperations<String, SigninUser> operations;
+
+    // uk在redis中的key的前缀
+    private static final String                 SIGNIN_REDIS_KEY_PREX = "uk.";
+
+    @PostConstruct
+    public void init() {
+        template.setValueSerializer(new JacksonJsonRedisSerializer<>(SigninUser.class));
+        operations = template.opsForValue();
+    }
 
     @Override
-    public Boolean put(final String uk, final SigninUser signinUser) {
-        Boolean result = redisTemplate.execute(new RedisCallback<Boolean>() {
-
-            public Boolean doInRedis(RedisConnection connection) throws DataAccessException {
-                RedisSerializer<String> serializer = getRedisSerializer();
-                byte[] key = serializer.serialize(uk);
-                byte[] name = serializer.serialize(signinUser.getId().toString());
-                return connection.setNX(key, name);
-            }
-        });
-        return result;
+    public void put(final String uk, final SigninUser signinUser) {
+        operations.set(generateRedisKey(uk), signinUser);
     }
 
     @Override
     public SigninUser get(final String uk) {
-        SigninUser result = redisTemplate.execute(new RedisCallback<SigninUser>() {
+        if (StringUtils.isBlank(generateRedisKey(uk))) {
+            return null;
+        }
+        return operations.get(generateRedisKey(uk));
+    }
 
-            public SigninUser doInRedis(RedisConnection connection) throws DataAccessException {
-                RedisSerializer<String> serializer = getRedisSerializer();
-                byte[] key = serializer.serialize(uk);
-                if (key == null) {
-                    return null;
-                }
-                byte[] value = connection.get(key);
-                if (value == null) {
-                    return null;
-                }
-                String name = serializer.deserialize(value);
-                return new SigninUser(Integer.parseInt(name));
-            }
-        });
-        return result;
+    /**
+     * 生成redis的key
+     * 
+     * @param uk
+     * @return
+     */
+    private String generateRedisKey(String uk) {
+        if (StringUtils.isBlank(uk)) {
+            return null;
+        }
+        return SIGNIN_REDIS_KEY_PREX + uk;
     }
 }
