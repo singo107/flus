@@ -17,7 +17,7 @@ import cn.flus.account.core.service.AccountUserService;
  */
 @Controller
 @RequestMapping("/")
-public class SignupController extends BaseController {
+public class SignupController {
 
     @Autowired
     private AccountUserService accountUserService;

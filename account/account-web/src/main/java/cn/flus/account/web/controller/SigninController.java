@@ -23,7 +23,7 @@ import cn.flus.account.web.utils.SigninExecutor;
  */
 @Controller
 @RequestMapping("/")
-public class SigninController extends BaseController {
+public class SigninController {
 
     @Autowired
     private AccountUserService accountUserService;

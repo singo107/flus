@@ -4,6 +4,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,6 +68,9 @@ public class SigninExecutor {
      */
     public SigninUser getSignin(HttpServletRequest httpRequest) {
         String uk = CookieUtils.getValue(httpRequest, SIGNIN_USER_CK);
+        if (StringUtils.isBlank(uk)) {
+            return null;
+        }
         return signinUserService.get(uk);
     }
 }

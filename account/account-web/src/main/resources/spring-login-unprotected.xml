@@ -9,6 +9,7 @@
 	<loginupt:unprotectedConfig id="unprotectedConfig">
 		<loginupt:requestPattern pattern="/" httpMethod="GET" />
 		<loginupt:requestPattern pattern="/index" httpMethod="GET" />
+		<loginupt:requestPattern pattern="/captcha" httpMethod="GET" />
 		<loginupt:requestPattern pattern="/signin" httpMethod="GET" />
 		<loginupt:requestPattern pattern="/signin" httpMethod="POST" />
 	</loginupt:unprotectedConfig>

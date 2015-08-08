@@ -20,7 +20,7 @@ import cn.flus.account.core.service.AccountUserService;
  */
 @Controller
 @RequestMapping("/")
-public class SignoutController extends BaseController {
+public class SignoutController {
 
     @Autowired
     private AccountUserService accountUserService;

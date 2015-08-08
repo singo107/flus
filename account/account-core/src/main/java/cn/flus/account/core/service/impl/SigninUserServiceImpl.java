@@ -1,9 +1,9 @@
 package cn.flus.account.core.service.impl;
 
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import cn.flus.account.core.dao.SigninUserDao;
 import cn.flus.account.core.dto.SigninUser;
@@ -24,10 +24,7 @@ public class SigninUserServiceImpl implements SigninUserService {
     @Override
     public SigninUser get(String uk) {
 
-        // 获取登录的用户信息
-        if (StringUtils.isBlank(uk)) {
-            return null;
-        }
+        Assert.hasText(uk);
         SigninUser signinUser = signinUserDao.get(uk);
         if (signinUser == null) {
             return null;
@@ -40,6 +37,8 @@ public class SigninUserServiceImpl implements SigninUserService {
 
     @Override
     public void put(String uk, SigninUser signinUser) {
+        Assert.hasText(uk);
+        Assert.notNull(signinUser);
         signinUserDao.put(uk, signinUser, timeout * 60 * 1000);
     }
 }

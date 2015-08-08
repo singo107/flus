@@ -16,7 +16,7 @@ import cn.flus.account.web.utils.SigninUtils;
  */
 @Controller
 @RequestMapping("/")
-public class IndexController extends BaseController {
+public class IndexController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView root(ModelMap model) {
