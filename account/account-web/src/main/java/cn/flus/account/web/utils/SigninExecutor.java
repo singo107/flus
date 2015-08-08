@@ -27,7 +27,7 @@ public class SigninExecutor {
     // 记录用户登录的唯一键，存放在Cookie中
     private static final String SIGNIN_USER_CK = "sn_k";
 
-    @Value("${domain.signin}")
+    @Value("${signin.domain}")
     private String              signinDomain;
 
     @Autowired

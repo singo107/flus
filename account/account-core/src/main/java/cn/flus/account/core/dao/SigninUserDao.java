@@ -4,7 +4,7 @@ import cn.flus.account.core.dto.SigninUser;
 
 public interface SigninUserDao {
 
-    void put(String uk, SigninUser signinUser);
+    void put(String key, SigninUser signinUser, long timeout);
 
-    SigninUser get(String uk);
+    SigninUser get(String key);
 }
