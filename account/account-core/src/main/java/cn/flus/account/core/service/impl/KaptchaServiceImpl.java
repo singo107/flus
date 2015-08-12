@@ -3,7 +3,7 @@ package cn.flus.account.core.service.impl;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.Locale;
+import java.util.Properties;
 
 import javax.annotation.PostConstruct;
 import javax.imageio.ImageIO;
@@ -15,30 +15,35 @@ import org.springframework.util.Assert;
 
 import cn.flus.account.core.service.CaptchaService;
 
-import com.octo.captcha.service.captchastore.FastHashMapCaptchaStore;
-import com.octo.captcha.service.image.DefaultManageableImageCaptchaService;
-import com.octo.captcha.service.image.ImageCaptchaService;
+import com.google.code.kaptcha.Constants;
+import com.google.code.kaptcha.impl.DefaultKaptcha;
+import com.google.code.kaptcha.util.Config;
 
 @Service("captchaService")
-public class CaptchaServiceImpl implements CaptchaService {
+public class KaptchaServiceImpl implements CaptchaService {
 
-    private static final Logger logger             = LoggerFactory.getLogger(CaptchaServiceImpl.class);
-
-    private ImageCaptchaService imageCaptchaService;
+    private static final Logger logger             = LoggerFactory.getLogger(KaptchaServiceImpl.class);
+    private DefaultKaptcha      captchaProducer;
 
     private final static String CAPTCHA_IMAGE_TYPE = "jpg";
 
     @PostConstruct
     public void init() {
-        imageCaptchaService = new DefaultManageableImageCaptchaService(new FastHashMapCaptchaStore(),
-                                                                       new WoodCaptchaEngine(), 180, 100000, 75000);
+        Properties properties = new Properties();
+        properties.put(Constants.KAPTCHA_IMAGE_WIDTH, 250);
+        properties.put(Constants.KAPTCHA_IMAGE_HEIGHT, 250);
+        captchaProducer = new DefaultKaptcha();
+        captchaProducer.setConfig(new Config(properties));
     }
 
     @Override
     public byte[] generateCaptcha(String captchaKey) {
+
         Assert.hasText(captchaKey);
+
+        String code = captchaProducer.createText();
+        BufferedImage image = captchaProducer.createImage(code);
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        BufferedImage image = imageCaptchaService.getImageChallengeForID(captchaKey, Locale.SIMPLIFIED_CHINESE);
         try {
             ImageIO.write(image, CAPTCHA_IMAGE_TYPE, outputStream);
         } catch (IOException e) {
@@ -51,6 +56,6 @@ public class CaptchaServiceImpl implements CaptchaService {
     public boolean validateCaptcha(String captchaKey, String code) {
         Assert.hasText(captchaKey);
         Assert.hasText(code);
-        return imageCaptchaService.validateResponseForID(captchaKey, code);
+        return true;
     }
 }

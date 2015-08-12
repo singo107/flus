@@ -95,16 +95,9 @@
 			<groupId>redis.clients</groupId>
 			<artifactId>jedis</artifactId>
 		</dependency>
-		<!-- captcha -->
 		<dependency>
-			<groupId>com.octo.captcha</groupId>
-			<artifactId>jcaptcha-all</artifactId>
-			<exclusions>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring</artifactId>
-				</exclusion>
-			</exclusions>
+			<groupId>com.github.axet</groupId>
+			<artifactId>kaptcha</artifactId>
 		</dependency>
 	</dependencies>
 </project>
