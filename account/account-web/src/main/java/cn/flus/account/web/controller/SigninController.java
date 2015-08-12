@@ -14,7 +14,8 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import cn.flus.account.core.dao.domain.AccountUserEntity;
 import cn.flus.account.core.service.AccountUserService;
-import cn.flus.account.web.utils.SigninExecutor;
+import cn.flus.account.core.service.CaptchaService;
+import cn.flus.account.web.utils.SignExecutor;
 
 /**
  * 登录
@@ -29,10 +30,14 @@ public class SigninController {
     private AccountUserService accountUserService;
 
     @Autowired
-    private SigninExecutor     signinExecutor;
+    private CaptchaService     captchaService;
+
+    @Autowired
+    private SignExecutor       signinExecutor;
 
     @RequestMapping(value = "/signin", method = RequestMethod.GET)
     public ModelAndView signinPage(@RequestParam(value = "dest", required = false) String dest,
+                                   @RequestParam(value = "error", required = false) String error,
                                    HttpServletRequest request, HttpServletResponse response, ModelMap model) {
         model.addAttribute("dest", dest);
         return new ModelAndView("signin");
@@ -41,20 +46,26 @@ public class SigninController {
     @RequestMapping(value = "/signin", method = RequestMethod.POST)
     public ModelAndView signinPagePost(@RequestParam(value = "loginname", required = true) String loginname,
                                        @RequestParam(value = "password", required = true) String password,
-                                       @RequestParam(value = "dest", required = false) String dest,
-                                       @RequestParam(value = "error", required = false) String error, ModelMap model,
+                                       @RequestParam(value = "code", required = true) String code,
+                                       @RequestParam(value = "dest", required = false) String dest, ModelMap model,
                                        HttpServletRequest request, HttpServletResponse response) {
+
+        // 图形验证码校验
+        boolean r = captchaService.validateCaptcha(request.getSession().getId(), code);
+        if (!r) {
+            return new ModelAndView(new RedirectView("signin?error=1"));
+        }
 
         // 根据用户名获取当前用户的信息
         AccountUserEntity accountUserEntity = accountUserService.getByLoginname(loginname);
         if (accountUserEntity == null) {
-            return new ModelAndView(new RedirectView("signin?error=1"));
+            return new ModelAndView(new RedirectView("signin?error=2"));
         }
 
         // 检查密码是否正确
         boolean match = accountUserService.checkPassword(accountUserEntity, password);
         if (!match) {
-            return new ModelAndView(new RedirectView("signin?error=2"));
+            return new ModelAndView(new RedirectView("signin?error=3"));
         }
 
         // 登录
@@ -63,7 +74,7 @@ public class SigninController {
         // 跳转
         String redirectUrl = null;
         if (dest == null || dest.length() <= 0) {
-            redirectUrl = "index";
+            redirectUrl = "info";
         } else {
             redirectUrl = dest;
         }

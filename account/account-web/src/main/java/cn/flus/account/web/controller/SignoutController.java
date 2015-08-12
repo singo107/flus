@@ -11,24 +11,24 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
-import cn.flus.account.core.service.AccountUserService;
+import cn.flus.account.web.utils.SignExecutor;
 
 /**
  * login
  * 
- * @author zhouxing
+ * @author singo
  */
 @Controller
 @RequestMapping("/")
 public class SignoutController {
 
     @Autowired
-    private AccountUserService accountUserService;
+    private SignExecutor signinExecutor;
 
     @RequestMapping(value = "/signout", method = RequestMethod.GET)
     public ModelAndView signinPage(@RequestParam(value = "dest", required = false) String dest,
                                    HttpServletRequest request, HttpServletResponse response) {
-        request.getSession().removeAttribute("cuser");
+        signinExecutor.signinOut(request, response);
         if (dest == null || dest.trim().length() <= 0) {
             return new ModelAndView(new RedirectView("index"));
         } else {

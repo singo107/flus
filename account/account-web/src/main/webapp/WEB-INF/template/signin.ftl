@@ -7,8 +7,10 @@
 
 <body>
 	<form id="loginForm" method="post" action="${rc.getContextPath()}/signin">
-		<input id="loginname" name="loginname" type="text" /><br />
-		<input id="password" name="password" type="password" /><br />
+		用户名：<input id="loginname" name="loginname" type="text" /><br />
+		密码：<input id="password" name="password" type="password" /><br />
+		验证码：<input id="code" name="code" type="text" /><br />
+		<img src="${rc.getContextPath()}/captcha" alt="" /><br />
 		<input id="dest" name="dest" value="${dest!}" type="hidden" />
 		<input id="submit_login" value="登录" type="submit" />
 	</form>

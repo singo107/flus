@@ -41,4 +41,10 @@ public class SigninUserServiceImpl implements SigninUserService {
         Assert.notNull(signinUser);
         signinUserDao.put(uk, signinUser, timeout * 60 * 1000);
     }
+
+    @Override
+    public void remove(String uk) {
+        Assert.hasText(uk);
+        signinUserDao.remove(uk);
+    }
 }

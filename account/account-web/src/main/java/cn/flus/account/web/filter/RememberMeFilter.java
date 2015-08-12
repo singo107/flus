@@ -21,7 +21,7 @@ import cn.flus.account.core.dto.SigninUser;
 import cn.flus.account.core.service.AccountUserService;
 import cn.flus.account.web.utils.CookieUtils;
 import cn.flus.account.web.utils.SigninUtils;
-import cn.flus.account.web.utils.SigninExecutor;
+import cn.flus.account.web.utils.SignExecutor;
 import cn.flus.core.utils.DigestUtils;
 
 @Service("rememberMeFilter")
@@ -36,7 +36,7 @@ public class RememberMeFilter extends GenericFilterBean {
     private AccountUserService  accountUserService;
 
     @Autowired
-    private SigninExecutor      signinExecutor;
+    private SignExecutor      signinExecutor;
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException,

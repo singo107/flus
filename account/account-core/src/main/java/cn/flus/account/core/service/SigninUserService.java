@@ -24,4 +24,11 @@ public interface SigninUserService {
      * @param signinUser
      */
     void put(String uk, SigninUser signinUser);
+
+    /**
+     * 删除登录用户
+     * 
+     * @param uk
+     */
+    void remove(String uk);
 }

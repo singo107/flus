@@ -14,7 +14,7 @@ import org.springframework.web.filter.GenericFilterBean;
 
 import cn.flus.account.core.dto.SigninUser;
 import cn.flus.account.core.service.SigninUserService;
-import cn.flus.account.web.utils.SigninExecutor;
+import cn.flus.account.web.utils.SignExecutor;
 
 /**
  * 把登录的用户信息放在在ThreadLocal中保存
@@ -30,7 +30,7 @@ public class SigninContextStorageFilter extends GenericFilterBean {
     private SigninUserService   signinUserService;
 
     @Autowired
-    private SigninExecutor      signinExecutor;
+    private SignExecutor      signinExecutor;
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException,

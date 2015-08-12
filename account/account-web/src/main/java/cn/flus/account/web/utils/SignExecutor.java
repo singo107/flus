@@ -21,9 +21,9 @@ import cn.flus.account.core.service.SigninUserService;
  * @author singo
  */
 @Service("signinExecutor")
-public class SigninExecutor {
+public class SignExecutor {
 
-    private static final Logger logger         = LoggerFactory.getLogger(SigninExecutor.class);
+    private static final Logger logger         = LoggerFactory.getLogger(SignExecutor.class);
 
     // 记录用户登录的唯一键，存放在Cookie中
     private static final String SIGNIN_USER_CK = "sn_k";
@@ -60,14 +60,33 @@ public class SigninExecutor {
         return signinUser;
     }
 
+    public void signinOut(HttpServletRequest request, HttpServletResponse response) {
+
+        // 获取UK
+        String uk = CookieUtils.getValue(request, SIGNIN_USER_CK);
+        if (StringUtils.isBlank(uk)) {
+            return;
+        }
+
+        // 删除服务端存储的用户信息
+        signinUserService.remove(uk);
+
+        // 设置cookie
+        Cookie cookie = new Cookie(SIGNIN_USER_CK, null);
+        cookie.setDomain(signinDomain);
+        cookie.setPath("/");
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+    }
+
     /**
      * 获取已经登录的用户信息
      * 
      * @param httpRequest
      * @return
      */
-    public SigninUser getSignin(HttpServletRequest httpRequest) {
-        String uk = CookieUtils.getValue(httpRequest, SIGNIN_USER_CK);
+    public SigninUser getSignin(HttpServletRequest request) {
+        String uk = CookieUtils.getValue(request, SIGNIN_USER_CK);
         if (StringUtils.isBlank(uk)) {
             return null;
         }

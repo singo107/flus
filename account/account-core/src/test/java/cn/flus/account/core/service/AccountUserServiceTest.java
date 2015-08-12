@@ -28,8 +28,8 @@ public class AccountUserServiceTest {
 
     @Test
     public void test1() {
-        String loginname = "abc";
-        String password = "000000";
+        String loginname = "a";
+        String password = "a";
         AccountUserEntity accountUserEntity = accountUserService.signup(loginname, password);
         System.out.println(accountUserEntity.getId());
         boolean as = accountUserService.checkPassword(loginname, password);

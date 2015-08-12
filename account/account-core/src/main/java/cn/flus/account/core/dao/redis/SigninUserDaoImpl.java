@@ -35,4 +35,8 @@ public class SigninUserDaoImpl extends RedisKeyManagement implements SigninUserD
         return operations.get(signinKey(key));
     }
 
+    public void remove(final String key) {
+        template.delete(signinKey(key));
+    }
+
 }

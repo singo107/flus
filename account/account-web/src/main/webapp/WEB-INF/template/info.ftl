@@ -6,6 +6,7 @@
 </head>
 
 <body>
-	${user}
+	${user}<br />
+	<a href="${rc.getContextPath()}/signout">退出</a>
 </body>
 </html>

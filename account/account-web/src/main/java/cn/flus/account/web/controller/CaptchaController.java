@@ -30,7 +30,7 @@ public class CaptchaController {
     public void captcha(HttpServletRequest request, HttpServletResponse response) {
 
         // 生成图形验证码
-        byte[] captchaBytes = captchaService.generateCaptcha("abc");
+        byte[] captchaBytes = captchaService.generateCaptcha(request.getSession().getId());
 
         response.setHeader("Cache-Control", "no-store");
         response.setHeader("Pragma", "no-cache");
