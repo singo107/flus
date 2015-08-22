@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <configuration>
-	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-		<encoder>
-			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+
+	<appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+		<Encoding>UTF-8</Encoding>
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n
 			</pattern>
-		</encoder>
+		</layout>
 	</appender>
+
+	<logger name="cn.flus" level="debug" />
+
 	<root level="debug">
-		<appender-ref ref="STDOUT" />
+		<appender-ref ref=stdout />
 	</root>
 </configuration>

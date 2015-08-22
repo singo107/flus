@@ -14,9 +14,9 @@ public interface CaptchaService {
      * 校验图形验证码
      * 
      * @param captchaKey
-     * @param code
+     * @param captchaCode
      * @return
      */
-    boolean validateCaptcha(String captchaKey, String code);
+    boolean validateCaptcha(String captchaKey, String captchaCode);
 
 }

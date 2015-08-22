@@ -12,7 +12,7 @@
 		<property name="maxTotal" value="${redis.maxTotal}" />
 		<property name="maxIdle" value="${redis.maxIdle}" />
 		<property name="maxWaitMillis" value="${redis.maxWaitMillis}" />
-		<property name="testOnBorrow" value="${redis.testOnBorrow}" />
+		<property name="testOnBorrow" value="${redis.testOnBorrow:true}" />
 	</bean>
 
 	<bean id="jedisFactory"
@@ -25,9 +25,8 @@
 
 	<bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
 		<property name="connectionFactory" ref="jedisFactory" />
-		<property name="defaultSerializer">
-			<bean
-				class="org.springframework.data.redis.serializer.StringRedisSerializer" />
+		<property name="keySerializer">
+			<bean class="org.springframework.data.redis.serializer.StringRedisSerializer"></bean>
 		</property>
 	</bean>
 </beans>

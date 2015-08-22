@@ -28,19 +28,12 @@ public class SigninUserServiceTest {
 
     @Test
     public void test() {
-        String key = "a";
+        String key = "at";
         SigninUser signinUser = new SigninUser(1);
         signinUser.setLoginname("singo");
         signinUserService.put(key, signinUser);
         SigninUser signinUserAfter = signinUserService.get(key);
         Assert.assertEquals(signinUser.getId(), signinUserAfter.getId());
         Assert.assertEquals(signinUser.getLoginname(), signinUserAfter.getLoginname());
-    }
-
-    @Test
-    public void test1() {
-        String key = "a";
-        SigninUser signinUserAfter = signinUserService.get(key);
-        Assert.assertNotNull(signinUserAfter);
     }
 }

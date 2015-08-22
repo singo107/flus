@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import cn.flus.account.core.dao.AccountUserDao;
 import cn.flus.account.core.dao.domain.AccountUserEntity;
+import cn.flus.account.core.dao.mapper.AccountUserEntityMapper;
 import cn.flus.account.core.enums.AccountStatus;
 import cn.flus.account.core.enums.VerifyTag;
 import cn.flus.account.core.exceptions.LoginnameExistException;
@@ -27,16 +27,16 @@ import cn.flus.account.core.utils.PasswordStrength;
 public class AccountUserServiceImpl implements AccountUserService {
 
     @Autowired
-    private AccountUserDao accountUserDao;
+    private AccountUserEntityMapper accountUserEntityMapper;
 
     @Override
     public AccountUserEntity getById(Integer id) {
-        return accountUserDao.get(id);
+        return accountUserEntityMapper.selectByPrimaryKey(id);
     }
 
     @Override
     public AccountUserEntity getByLoginname(String loginname) {
-        return accountUserDao.getByLoginname(loginname);
+        return accountUserEntityMapper.selectByLoginname(loginname);
     }
 
     @Override
@@ -90,10 +90,7 @@ public class AccountUserServiceImpl implements AccountUserService {
         }
 
         // 添加到数据库
-        Integer id = accountUserDao.insert(entity);
-
-        // 返回对象
-        entity.setId(id);
+        accountUserEntityMapper.insert(entity);
         return entity;
     }
 
@@ -108,20 +105,20 @@ public class AccountUserServiceImpl implements AccountUserService {
         }
 
         // 如果用户名已被占用，直接返回为true
-        if (accountUserDao.getByLoginname(loginname) != null) {
+        if (accountUserEntityMapper.selectByLoginname(loginname) != null) {
             return true;
         }
 
         // 如果用户名是email，还需检查email是否已经占用
         if (LoginnameUtils.isEmail(loginname)) {
-            if (accountUserDao.getByEmail(loginname) != null) {
+            if (accountUserEntityMapper.selectByEmail(loginname) != null) {
                 return true;
             }
         }
 
         // 如果用户名是mobile，还需检查mobile是否已经占用
         if (LoginnameUtils.isMobile(loginname)) {
-            if (accountUserDao.getByMobile(loginname) != null) {
+            if (accountUserEntityMapper.selectByMobile(loginname) != null) {
                 return true;
             }
         }
