@@ -140,9 +140,9 @@
 				<version>5.1.17</version>
 			</dependency>
 			<dependency>
-				<groupId>commons-dbcp</groupId>
-				<artifactId>commons-dbcp</artifactId>
-				<version>1.4</version>
+				<groupId>com.alibaba</groupId>
+				<artifactId>druid</artifactId>
+				<version>0.2.25</version>
 			</dependency>
 			<!-- spring framework -->
 			<dependency>

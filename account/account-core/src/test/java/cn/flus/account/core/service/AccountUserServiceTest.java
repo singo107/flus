@@ -28,7 +28,7 @@ public class AccountUserServiceTest {
 
     @Test
     public void test1() {
-        String loginname = "ak2";
+        String loginname = "ak5";
         String password = "000000";
         AccountUserEntity accountUserEntity = accountUserService.signup(loginname, password);
         System.out.println(accountUserEntity.getId());
