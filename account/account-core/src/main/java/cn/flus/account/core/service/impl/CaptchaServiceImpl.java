@@ -19,6 +19,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import cn.flus.account.core.exceptions.CaptchaExpireException;
 import cn.flus.account.core.exceptions.ExceedMaxValidateException;
 import cn.flus.account.core.service.CaptchaService;
 
@@ -108,7 +109,7 @@ public class CaptchaServiceImpl implements CaptchaService {
         // 判断captchaKey是否存在
         if (redisTemplate.opsForHash().size(redisKey(captchaKey)) <= 0) {
             logger.warn("captcha key not exist: " + captchaKey);
-            return false;
+            throw new CaptchaExpireException("captcha expire.");
         }
 
         // 获取校验错误次数

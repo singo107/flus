@@ -10,6 +10,7 @@
 		<loginupt:requestPattern pattern="/" httpMethod="GET" />
 		<loginupt:requestPattern pattern="/index" httpMethod="GET" />
 		<loginupt:requestPattern pattern="/captcha" httpMethod="GET" />
+		<loginupt:requestPattern pattern="/captcha/validate" httpMethod="GET" />
 		<loginupt:requestPattern pattern="/signin" httpMethod="GET" />
 		<loginupt:requestPattern pattern="/signin" httpMethod="POST" />
 		<loginupt:requestPattern pattern="/signout" httpMethod="GET" />

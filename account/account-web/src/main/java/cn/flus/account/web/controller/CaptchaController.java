@@ -11,8 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import cn.flus.account.core.exceptions.CaptchaExpireException;
+import cn.flus.account.core.exceptions.ExceedMaxValidateException;
 import cn.flus.account.core.service.CaptchaService;
+import cn.flus.account.web.bean.StandardResponse;
 
 /**
  * 图形验证码
@@ -41,6 +46,29 @@ public class CaptchaController {
             servletOutputStream = response.getOutputStream();
             IOUtils.write(captchaBytes, servletOutputStream);
         } catch (IOException e) {
+        }
+    }
+
+    @RequestMapping(value = "/captcha/validate", method = RequestMethod.GET)
+    @ResponseBody
+    public StandardResponse<String> validate(@RequestParam(value = "code", required = true) String code,
+                                             HttpServletRequest request, HttpServletResponse response) {
+
+        // 检查校验码是否正确
+        boolean result = false;
+        try {
+            result = captchaService.validateCaptcha(request.getSession().getId(), code);
+        } catch (CaptchaExpireException e1) {
+            return new StandardResponse<String>("validate.expire", "验证码过期，请输入新的验证码！");
+        } catch (ExceedMaxValidateException e2) {
+            return new StandardResponse<String>("validate.times.exceed", "验证码错误次数过多，请输入新的验证码！");
+        }
+
+        // 返回
+        if (result) {
+            return new StandardResponse<String>(code);
+        } else {
+            return new StandardResponse<String>("captcha.code.incorrect", "验证码错误，请重新输入！");
         }
     }
 }

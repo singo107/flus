@@ -6,12 +6,12 @@
          http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
          http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd">
 
-	<mvc:resources location="classpath:/resources/" mapping="/resources/**" />
 	<context:property-placeholder location="classpath:default.properties"
 		file-encoding="utf-8" />
 	<context:component-scan base-package="cn.flus.account.web.controller" />
 	<mvc:annotation-driven />
-	<mvc:default-servlet-handler />
+
+	<mvc:resources location="classpath:/resources/" mapping="/resources/**" />
 
 	<bean id="freemarkerConfiguration"
 		class="org.springframework.beans.factory.config.PropertiesFactoryBean">
@@ -31,7 +31,7 @@
 		</property>
 	</bean>
 	<bean id="fmXmlEscape" class="freemarker.template.utility.XmlEscape" />
-	<bean id="viewResolver"
+	<bean id="freemarkerViewResolver"
 		class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
 		<property name="cache" value="true" />
 		<property name="prefix" value="" />
