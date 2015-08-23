@@ -10,9 +10,9 @@ import org.springframework.web.servlet.view.RedirectView;
 import cn.flus.account.web.utils.SigninUtils;
 
 /**
- * Homepage
+ * 首页
  * 
- * @author zhouxing
+ * @author singo
  */
 @Controller
 @RequestMapping("/")

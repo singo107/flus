@@ -31,7 +31,7 @@ public class SigninCheckFilter extends GenericFilterBean {
         HttpServletResponse httpResponse = (HttpServletResponse) response;
 
         // 不受登录保护的请求
-        if (!SigninContextHolder.getContext().isNeedProtected()) {
+        if (!SigninContextHolder.getContext().isSigninRequired()) {
             chain.doFilter(request, response);
             return;
         }

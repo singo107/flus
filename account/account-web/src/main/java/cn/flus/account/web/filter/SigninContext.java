@@ -5,17 +5,17 @@ import cn.flus.account.core.dto.SigninUser;
 public class SigninContext {
 
     // 当前访问是否需要登录保护
-    private boolean    needProtected;
+    private boolean    signinRequired;
 
     // 当期登录的用户
     private SigninUser signinUser;
 
-    public boolean isNeedProtected() {
-        return needProtected;
+    public boolean isSigninRequired() {
+        return signinRequired;
     }
 
-    public void setNeedProtected(boolean needProtected) {
-        this.needProtected = needProtected;
+    public void setSigninRequired(boolean signinRequired) {
+        this.signinRequired = signinRequired;
     }
 
     public SigninUser getSigninUser() {

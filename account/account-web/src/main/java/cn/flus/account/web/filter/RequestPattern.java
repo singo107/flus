@@ -1,4 +1,4 @@
-package cn.flus.account.web.config;
+package cn.flus.account.web.filter;
 
 public class RequestPattern {
 

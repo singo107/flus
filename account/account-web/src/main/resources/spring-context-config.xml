@@ -9,24 +9,20 @@
       http://www.springframework.org/schema/util
       http://www.springframework.org/schema/util/spring-util-3.1.xsd">
 
-	<context:property-placeholder location="classpath:default.properties"
-		ignore-resource-not-found="true" file-encoding="utf-8" />
+	<context:property-placeholder location="classpath:default.properties" ignore-resource-not-found="true" file-encoding="utf-8" />
 	<context:component-scan base-package="cn.flus.account">
-		<context:exclude-filter type="annotation"
-			expression="org.springframework.stereotype.Controller" />
-		<context:exclude-filter type="annotation"
-			expression="org.springframework.context.annotation.Configuration" />
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+		<context:exclude-filter type="annotation" expression="org.springframework.context.annotation.Configuration" />
 	</context:component-scan>
 	<context:annotation-config />
 
 	<util:list id="accountFilterList">
 		<ref bean="signinContextStorageFilter" />
 		<ref bean="rememberMeFilter" />
-		<ref bean="whetherProtectedFilter" />
+		<ref bean="signinRequiredFilter" />
 		<ref bean="signinCheckFilter" />
 	</util:list>
 
 	<import resource="classpath:spring-mysql-config.xml" />
 	<import resource="classpath:spring-redis-config.xml" />
-	<import resource="classpath:spring-login-unprotected.xml" />
 </beans>

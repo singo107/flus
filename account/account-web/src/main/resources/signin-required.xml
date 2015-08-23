@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<unrequired>
+	<http pattern="/resources/**" method="get" />
+	<http pattern="/" method="get" />
+	<http pattern="/index" method="get" />
+	<http pattern="/captcha" method="get" />
+	<http pattern="/captcha/validate" method="get" />
+	<http pattern="/signin" method="get" />
+	<http pattern="/signin" method="post" />
+	<http pattern="/signout" method="get" />
+</unrequired>

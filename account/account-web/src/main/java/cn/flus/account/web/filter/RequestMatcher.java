@@ -28,6 +28,7 @@ public class RequestMatcher {
 
     public RequestMatcher(String pattern, String httpMethod) {
 
+        httpMethod = httpMethod.toUpperCase();
         logger.debug("pattern: " + pattern + ", httpMethod: " + httpMethod);
 
         if (pattern.equals(MATCH_ALL) || pattern.equals("**")) {

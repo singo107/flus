@@ -14,7 +14,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import cn.flus.account.web.utils.SignExecutor;
 
 /**
- * login
+ * 退出
  * 
  * @author singo
  */
@@ -26,8 +26,8 @@ public class SignoutController {
     private SignExecutor signinExecutor;
 
     @RequestMapping(value = "/signout", method = RequestMethod.GET)
-    public ModelAndView signinPage(@RequestParam(value = "dest", required = false) String dest,
-                                   HttpServletRequest request, HttpServletResponse response) {
+    public ModelAndView signoutPage(@RequestParam(value = "dest", required = false) String dest,
+                                    HttpServletRequest request, HttpServletResponse response) {
         signinExecutor.signinOut(request, response);
         if (dest == null || dest.trim().length() <= 0) {
             return new ModelAndView(new RedirectView("index"));
