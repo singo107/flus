@@ -9,20 +9,14 @@ import org.xml.sax.helpers.DefaultHandler;
 
 public class SigninRequiredReader extends DefaultHandler {
 
-    private String               nodeName = null;
+    private SigninRequired       signinRequired;
 
-    private List<RequestMatcher> unrequiredList;
-    private RequestMatcher       requestMatcher;
-    private RequestPattern       requestPattern;
-
-    public SigninRequiredReader(String nodeName) {
-        this.nodeName = nodeName;
-    }
+    private List<SigninRequired> list;
 
     @Override
     public void startDocument() throws SAXException {
         super.startDocument();
-        unrequiredList = new ArrayList<RequestMatcher>();
+        list = new ArrayList<SigninRequired>();
     }
 
     @Override
@@ -33,17 +27,24 @@ public class SigninRequiredReader extends DefaultHandler {
     @Override
     public void startElement(String uri, String localName, String name, Attributes attributes) throws SAXException {
         super.startElement(uri, localName, name, attributes);
-        if (name.equals(nodeName)) {
-            requestPattern = new RequestPattern();
-        }
-        if (attributes != null && requestPattern != null) {
-            for (int i = 0; i < attributes.getLength(); i++) {
-                if (attributes.getQName(i).equals("pattern")) {
-                    requestPattern.setPattern(attributes.getValue(i));
-                } else if (attributes.getQName(i).equals("method")) {
-                    requestPattern.setHttpMethod(attributes.getValue(i));
+        if (name.equals("request")) {
+
+            String pattern = null;
+            String method = null;
+            boolean required = false;
+
+            if (attributes != null) {
+                for (int i = 0; i < attributes.getLength(); i++) {
+                    if (attributes.getQName(i).equals("pattern")) {
+                        pattern = attributes.getValue(i);
+                    } else if (attributes.getQName(i).equals("method")) {
+                        method = attributes.getValue(i);
+                    } else if (attributes.getQName(i).equals("required")) {
+                        required = Boolean.getBoolean(attributes.getValue(i));
+                    }
                 }
             }
+            signinRequired = new SigninRequired(pattern, method, required);
         }
     }
 
@@ -55,18 +56,13 @@ public class SigninRequiredReader extends DefaultHandler {
     @Override
     public void endElement(String uri, String localName, String name) throws SAXException {
         super.endElement(uri, localName, name);
-        if (name.equals(nodeName)) {
-            if (requestPattern.getHttpMethod() == null || requestPattern.getHttpMethod().length() <= 0) {
-                requestMatcher = new RequestMatcher(requestPattern.getPattern());
-            } else {
-                requestMatcher = new RequestMatcher(requestPattern.getPattern(), requestPattern.getHttpMethod());
-            }
-            unrequiredList.add(requestMatcher);
+        if (name.equals("request")) {
+            list.add(signinRequired);
         }
     }
 
-    public List<RequestMatcher> getUnrequiredList() {
-        return unrequiredList;
+    public List<SigninRequired> get() {
+        return list;
     }
 
 }

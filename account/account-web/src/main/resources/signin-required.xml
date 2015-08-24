@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<unrequired>
-	<http pattern="/resources/**" method="get" />
-	<http pattern="/" method="get" />
-	<http pattern="/index" method="get" />
-	<http pattern="/captcha" method="get" />
-	<http pattern="/captcha/validate" method="get" />
-	<http pattern="/signin" method="get" />
-	<http pattern="/signin" method="post" />
-	<http pattern="/signout" method="get" />
-</unrequired>
+<signin>
+	<request pattern="/resources/**" method="get" required="false" />
+	<request pattern="/" method="get" required="false" />
+	<request pattern="/index" method="get" required="false" />
+	<request pattern="/captcha" method="get" required="false" />
+	<request pattern="/captcha/validate" method="get" required="false" />
+	<request pattern="/signin" method="get" required="false" />
+	<request pattern="/signin" method="post" required="false" />
+	<request pattern="/signout" method="get" required="false" />
+</signin>

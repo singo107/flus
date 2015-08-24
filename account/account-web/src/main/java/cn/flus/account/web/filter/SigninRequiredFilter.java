@@ -1,7 +1,7 @@
 package cn.flus.account.web.filter;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.io.InputStream;
 import java.util.List;
 
 import javax.servlet.FilterChain;
@@ -9,9 +9,10 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.filter.GenericFilterBean;
 
@@ -23,19 +24,21 @@ import org.springframework.web.filter.GenericFilterBean;
 @Service("signinRequiredFilter")
 public class SigninRequiredFilter extends GenericFilterBean {
 
-    private static List<RequestMatcher> unrequiredList;
+    private static final Logger         logger   = LoggerFactory.getLogger(SigninRequiredFilter.class);
+
+    private static final String         XML_FILE = "signin-required.xml";
+
+    private static List<SigninRequired> list;
 
     @Override
     protected void initFilterBean() throws ServletException {
-        // 初始化登录配置
-        unrequiredList = new ArrayList<RequestMatcher>();
         try {
-            SAXParserFactory spf = SAXParserFactory.newInstance();
-            SAXParser parser = spf.newSAXParser();
-            SigninRequiredReader handler = new SigninRequiredReader("http");
-            parser.parse(this.getClass().getClassLoader().getResourceAsStream("signin-required.xml"), handler);
-            unrequiredList = handler.getUnrequiredList();
+            InputStream inputStream = getClass().getClassLoader().getResourceAsStream(XML_FILE);
+            SigninRequiredReader handler = new SigninRequiredReader();
+            SAXParserFactory.newInstance().newSAXParser().parse(inputStream, handler);
+            list = handler.get();
         } catch (Exception e) {
+            logger.error("read xml failed, xml=" + XML_FILE, e);
         }
     }
 
@@ -47,18 +50,20 @@ public class SigninRequiredFilter extends GenericFilterBean {
     }
 
     /**
-     * 判断当前请求是否需要登录
+     * 判断是否需要登录保护
      * 
      * @param httpRequest
      * @return
      */
     private boolean check(HttpServletRequest httpRequest) {
-        if (unrequiredList == null || unrequiredList.size() <= 0) {
+        if (list == null || list.size() <= 0) {
             return true;
         }
-        for (RequestMatcher e : unrequiredList) {
-            if (e.matches(httpRequest)) {
-                return false;
+        RequestMatcher matcher = null;
+        for (SigninRequired e : list) {
+            matcher = new RequestMatcher(e.getPattern(), e.getMethod().toUpperCase());
+            if (matcher.matches(httpRequest)) {
+                return e.isRequired();
             }
         }
         return true;
