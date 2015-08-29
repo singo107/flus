@@ -1,0 +1,29 @@
+.signin_box {
+	width:360px;
+	margin: 100px auto;
+	box-shadow: 0 2px 2px rgba(0,0,0,0.2);
+}
+.signin_body {
+	border:1px solid #C8C8C8;
+	padding:30px;
+}
+.signin_inline {
+	margin:10px 0;
+}
+.signin_error {
+	border: 1px solid #FF0000;
+	padding: 5px;
+}
+.signin_loginname {
+	width:276px;
+	text-indent: 30px;
+	background: url(../../images/user.png) no-repeat 10px 50%;
+}
+.signin_password {
+	width:276px;
+	text-indent: 30px;
+	background: url(../../images/password.png) no-repeat 10px 50%;
+}
+.signin_button {
+	width:298px;
+}

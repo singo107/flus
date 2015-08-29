@@ -1,0 +1,150 @@
+body {
+    color: #333;
+}
+a {
+    color: #0096f0;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: none;
+    color: #3cb4ff;
+}
+/*------------------------------------------------------------*/
+select, textarea, input[type="text"], input[type="password"] {
+	display: -moz-inline-stack;
+	display: inline-block;
+	vertical-align: middle;
+	*vertical-align: auto;
+	zoom: 1;
+	*display: inline;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    vertical-align: middle;
+    padding: 10px;
+    border: 1px solid #c8c8be;
+}
+input[type="button"], input[type="submit"] {
+	display: -moz-inline-stack;
+	display: inline-block;
+	vertical-align: middle;
+	*vertical-align: auto;
+	zoom: 1;
+	*display: inline;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    vertical-align: middle;
+    text-decoration: none;
+	text-align: center;
+    padding: 10px;
+	border:0;
+}
+/*------------------------------------------------------------*/
+.button {
+	display: -moz-inline-stack;
+	display: inline-block;
+	vertical-align: middle;
+	*vertical-align: auto;
+	zoom: 1;
+	*display: inline;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    vertical-align: middle;
+    text-decoration: none;
+	text-align: center;
+    padding: 5px 20px;
+	cursor: pointer;
+}
+.button-primary {
+	background: #7cb5ec;
+	color: #FFF;
+}
+.button-primary a {
+	color: #FFF;
+}
+.button-primary a:hover {
+	color: #FFF;
+}
+.button-primary:hover {
+	background: #82c2ff;
+	color: #FFF;
+}
+.button-primary:active {
+	background: #50b4ff;
+	color: #FFF;
+}
+/*------------------------------------------------------------*/
+.page {
+	line-height:30px;
+	float: right;
+}
+.page div {
+	float:left;
+	margin:0 5px;
+	color:#999;
+}
+.page div span {
+ 	color:#FF9900;
+ 	padding:0 5px;
+}
+.page div input[type='text'] {
+	padding: 3px;
+ 	width:30px;
+}
+.page div input[type='button'] {
+	border:0;
+	cursor: pointer;
+	background: #e4e4de;
+	color: #666;
+}
+.page div input[type='button']:hover {
+	background: #f0f0e6;
+	color: #666;
+}
+.page ul {
+	float:left;
+}
+.page ul li {
+	float:left;
+	margin:0 2px;
+}
+.page ul li a {
+	display:inline-block;
+	border:1px solid #d0d0d0;
+	background:#fff;
+	text-align:center;
+	display: -moz-inline-stack;
+	display: inline-block;
+	vertical-align: middle;
+	*vertical-align: auto;
+	zoom: 1;
+	*display: inline;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    vertical-align: middle;
+    padding:0 10px;
+}
+.page ul li a:hover {
+	background:#fff;
+}
+.page ul li span {
+	display:inline-block;
+	text-align:center;
+	border:1px solid #FF9900;
+	background:#FF9900;
+	color:#fff;
+	padding:0 10px;
+	display: -moz-inline-stack;
+	display: inline-block;
+	vertical-align: middle;
+	*vertical-align: auto;
+	zoom: 1;
+	*display: inline;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    vertical-align: middle;
+}

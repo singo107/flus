@@ -40,32 +40,26 @@ public class SigninController {
                                    @RequestParam(value = "error", required = false) String error,
                                    HttpServletRequest request, HttpServletResponse response, ModelMap model) {
         model.addAttribute("dest", dest);
+        model.addAttribute("error", error);
         return new ModelAndView("signin");
     }
 
     @RequestMapping(value = "/signin", method = RequestMethod.POST)
     public ModelAndView signinPagePost(@RequestParam(value = "loginname", required = true) String loginname,
                                        @RequestParam(value = "password", required = true) String password,
-                                       @RequestParam(value = "code", required = true) String code,
                                        @RequestParam(value = "dest", required = false) String dest, ModelMap model,
                                        HttpServletRequest request, HttpServletResponse response) {
-
-        // 图形验证码校验
-        boolean r = captchaService.validateCaptcha(request.getSession().getId(), code);
-        if (!r) {
-            return new ModelAndView(new RedirectView("signin?error=1"));
-        }
 
         // 根据用户名获取当前用户的信息
         AccountUserEntity accountUserEntity = accountUserService.getByLoginname(loginname);
         if (accountUserEntity == null) {
-            return new ModelAndView(new RedirectView("signin?error=2"));
+            return new ModelAndView(new RedirectView("signin?error=loginname"));
         }
 
         // 检查密码是否正确
         boolean match = accountUserService.checkPassword(accountUserEntity, password);
         if (!match) {
-            return new ModelAndView(new RedirectView("signin?error=3"));
+            return new ModelAndView(new RedirectView("signin?error=password"));
         }
 
         // 登录

@@ -2,6 +2,8 @@
 <html>
 <head>
 <title>首页</title>
+<link href="${static_path}/css/reset.css" rel="stylesheet" type="text/css"/>
+<link href="${static_path}/css/global.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="${static_path}/js/jquery/jquery-1.11.1.min.js"></script>
 </head>
 
