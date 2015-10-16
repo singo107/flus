@@ -8,7 +8,15 @@ import java.util.Map;
  */
 public enum AccountStatus {
 
-    TEMPORARY(0), AVAILABLE(1);
+    /**
+     * 临时
+     */
+    TEMPORARY(0),
+
+    /**
+     * 正式
+     */
+    AVAILABLE(1);
 
     private Integer code;
 

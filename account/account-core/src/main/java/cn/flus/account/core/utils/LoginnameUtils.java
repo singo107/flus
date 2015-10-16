@@ -3,6 +3,8 @@ package cn.flus.account.core.utils;
 import java.util.regex.Pattern;
 
 /**
+ * 用户名、手机号、邮箱的字符校验工具类
+ * 
  * @author singo
  */
 public class LoginnameUtils {

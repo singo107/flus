@@ -1,10 +1,18 @@
 package cn.flus.account.core.service.impl;
 
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
+
+import javax.annotation.PostConstruct;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang.RandomStringUtils;
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -12,6 +20,7 @@ import cn.flus.account.core.dao.domain.AccountUserEntity;
 import cn.flus.account.core.dao.mapper.AccountUserEntityMapper;
 import cn.flus.account.core.enums.AccountStatus;
 import cn.flus.account.core.enums.VerifyTag;
+import cn.flus.account.core.exceptions.ExceedMaxValidateException;
 import cn.flus.account.core.exceptions.LoginnameExistException;
 import cn.flus.account.core.exceptions.LoginnameInvalidException;
 import cn.flus.account.core.exceptions.LoginnameNotFoundException;
@@ -26,8 +35,23 @@ import cn.flus.account.core.utils.PasswordStrength;
 @Service("accountUserService")
 public class AccountUserServiceImpl implements AccountUserService {
 
+    private static final Logger           logger                        = LoggerFactory.getLogger(AccountUserServiceImpl.class);
+
     @Autowired
-    private AccountUserEntityMapper accountUserEntityMapper;
+    private AccountUserEntityMapper       accountUserEntityMapper;
+
+    @Autowired
+    private RedisTemplate<String, String> redisTemplate;
+
+    // 30分钟之内，密码只能错3次
+    private static final String           PASSWORD_CHECK_REDIS_KEY_PREX = "password.check.";
+    private final static int              PASSWORD_CHECK_EXPIRE_TIME    = 30 * 60 * 1000;                                       // 30分钟
+    private final static int              PASSWORD_CHECK_ERROR_TIMES    = 3;
+
+    @PostConstruct
+    public void init() {
+        redisTemplate.setValueSerializer(new StringRedisSerializer());
+    }
 
     @Override
     public AccountUserEntity getById(Integer id) {
@@ -128,6 +152,8 @@ public class AccountUserServiceImpl implements AccountUserService {
 
     @Override
     public boolean checkPassword(String loginname, String password) {
+
+        // 判断用户名是否存在
         AccountUserEntity entity = getByLoginname(loginname);
         if (entity == null) {
             throw new LoginnameNotFoundException("loginname is not exist.");
@@ -143,9 +169,34 @@ public class AccountUserServiceImpl implements AccountUserService {
         Assert.hasText(entity.getPassword());
         Assert.hasText(entity.getPasswordSalt());
 
+        // 判断密码校验错误的次数
+        String strTimes = redisTemplate.opsForValue().get(redisKey(entity.getId().toString()));
+        int times = 0;
+        if (StringUtils.isNotBlank(strTimes)) {
+            times = Integer.parseInt(strTimes);
+            if (times >= PASSWORD_CHECK_ERROR_TIMES) {
+                logger.warn("login password error times exceed max: " + PASSWORD_CHECK_ERROR_TIMES);
+                throw new ExceedMaxValidateException("login password error times exceed max: "
+                                                     + PASSWORD_CHECK_ERROR_TIMES);
+            }
+        }
+
         // 使用密码盐与参数password作Hash运算
         String passwordMd5Hex = DigestUtils.md5Hex(password + entity.getPasswordSalt());
-        return passwordMd5Hex.equals(entity.getPassword());
+
+        // 校验
+        if (passwordMd5Hex.equals(entity.getPassword())) {
+
+            redisTemplate.delete(redisKey(entity.getId().toString()));
+            return true;
+
+        } else {
+
+            // 密码错误次数加1
+            redisTemplate.opsForValue().set(redisKey(entity.getId().toString()), Integer.toString(++times),
+                                            PASSWORD_CHECK_EXPIRE_TIME, TimeUnit.MILLISECONDS);
+            return false;
+        }
     }
 
     /**
@@ -157,4 +208,10 @@ public class AccountUserServiceImpl implements AccountUserService {
         return RandomStringUtils.randomAlphanumeric(16);
     }
 
+    private String redisKey(String val) {
+        if (StringUtils.isBlank(val)) {
+            return null;
+        }
+        return PASSWORD_CHECK_REDIS_KEY_PREX + val;
+    }
 }

@@ -3,7 +3,7 @@ package cn.flus.account.core.dto;
 import java.io.Serializable;
 
 /**
- * 登录的用户
+ * 保存在会话中的对象（已经登录的用户）
  * 
  * @author singo
  */

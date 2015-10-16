@@ -1,9 +1,14 @@
 package cn.flus.account.core.service;
 
+/**
+ * 图形校验码
+ * 
+ * @author singo
+ */
 public interface CaptchaService {
 
     /**
-     * 生成图形验证码
+     * 生成图形验证码，返回图形的字节码
      * 
      * @param captchaKey
      * @return

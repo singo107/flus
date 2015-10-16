@@ -3,14 +3,14 @@ package cn.flus.account.core.service;
 import cn.flus.account.core.dao.domain.AccountUserEntity;
 
 /**
- * 用户
+ * 账号
  * 
  * @author singo
  */
 public interface AccountUserService {
 
     /**
-     * 读取用户
+     * 读取用户的详细信息
      * 
      * @param id
      * @return

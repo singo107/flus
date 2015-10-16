@@ -117,10 +117,4 @@ public class PasswordStrength {
         }
         return res;
     }
-
-    public static void main(String[] args) {
-        String p = "123\\456\\89";
-        System.out.println(p);
-        System.out.println(calStrength(p));
-    }
 }

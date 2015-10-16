@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import cn.flus.account.core.dao.domain.AccountUserEntity;
+import cn.flus.account.core.exceptions.ExceedMaxValidateException;
 import cn.flus.account.core.service.AccountUserService;
 import cn.flus.account.core.service.CaptchaService;
 import cn.flus.account.web.utils.SignExecutor;
@@ -57,12 +58,21 @@ public class SigninController {
         }
 
         // 检查密码是否正确
-        boolean match = accountUserService.checkPassword(accountUserEntity, password);
+        boolean match = false;
+        try {
+            match = accountUserService.checkPassword(accountUserEntity, password);
+        } catch (ExceedMaxValidateException e) {
+
+            // 超过最大校验次数，账号冻结30分钟
+            return new ModelAndView(new RedirectView("signin?error=freeze"));
+        }
         if (!match) {
+
+            // 密码错误
             return new ModelAndView(new RedirectView("signin?error=password"));
         }
 
-        // 登录
+        // 登录，记录会话
         signinExecutor.signin(accountUserEntity, response);
 
         // 跳转

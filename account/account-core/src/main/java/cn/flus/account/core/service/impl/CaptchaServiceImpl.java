@@ -44,7 +44,7 @@ public class CaptchaServiceImpl implements CaptchaService {
     private static final String           CAPTCHA_REDIS_KEY_PREX = "captcha.";
     private static final String           CAPTCHA_CODE_KEY       = "code";
     private static final String           CAPTCHA_TIMES_KEY      = "times";
-    private final static int              CAPTCHA_EXPIRE_TIME    = 5 * 60 * 1000;
+    private final static int              CAPTCHA_EXPIRE_TIME    = 5 * 60 * 1000;                                     // 5分钟
     private final static int              CAPTCHA_ERROR_TIMES    = 3;
 
     @PostConstruct

@@ -3,7 +3,7 @@ package cn.flus.account.core.service;
 import cn.flus.account.core.dto.SigninUser;
 
 /**
- * 登录用户
+ * 记录用户登录的会话信息
  * 
  * @author singo
  */

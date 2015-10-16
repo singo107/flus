@@ -16,8 +16,8 @@
 		<div class="signin_body">
 			<form id="loginForm" method="post" action="${rc.getContextPath()}/signin">
 				<input id="dest" name="dest" value="${dest!}" type="hidden" />
-				<div class="signin_inline"><input id="loginname" name="loginname" type="text" placeholder="Email" class="signin_loginname" /></div>
-				<div class="signin_inline"><input id="password" name="password" type="password" placeholder="密码"  class="signin_password" /></div>
+				<div class="signin_inline"><input id="loginname" name="loginname" type="text" placeholder="Email" class="signin_loginname" autocomplete="off" /></div>
+				<div class="signin_inline"><input id="password" name="password" type="password" placeholder="密码"  class="signin_password" autocomplete="off" /></div>
 				<div class="signin_inline clr">
 					<div class="f-l">
 						<label class="checkbox">
