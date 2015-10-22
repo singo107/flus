@@ -5,10 +5,10 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>cn.flus</groupId>
-		<artifactId>account</artifactId>
+		<artifactId>viewer</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>account-core</artifactId>
+	<artifactId>viewer-core</artifactId>
 	<packaging>jar</packaging>
 
 	<dependencies>

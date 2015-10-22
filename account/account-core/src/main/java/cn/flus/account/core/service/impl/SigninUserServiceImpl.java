@@ -8,7 +8,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.serializer.JacksonJsonRedisSerializer;
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -31,7 +31,7 @@ public class SigninUserServiceImpl implements SigninUserService {
 
     @PostConstruct
     public void init() {
-        redisTemplate.setValueSerializer(new JacksonJsonRedisSerializer<SigninUser>(SigninUser.class));
+        redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<SigninUser>(SigninUser.class));
     }
 
     @Override

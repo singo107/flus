@@ -2,9 +2,9 @@ package cn.flus.core.utils;
 
 import java.io.IOException;
 
-import org.codehaus.jackson.JsonParser;
-import org.codehaus.jackson.map.DeserializationConfig;
-import org.codehaus.jackson.map.ObjectMapper;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * json序列化，反序列化
@@ -18,10 +18,13 @@ public class JsonUtils {
     static {
         OBJECT_MAPPER.configure(JsonParser.Feature.ALLOW_SINGLE_QUOTES, true);
         OBJECT_MAPPER.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
-        OBJECT_MAPPER.configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        OBJECT_MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     }
 
     public static String toJson(Object object) {
+        if (object == null) {
+            return null;
+        }
         try {
             return OBJECT_MAPPER.writeValueAsString(object);
         } catch (IOException e) {
@@ -30,14 +33,9 @@ public class JsonUtils {
     }
 
     public static <T> T toObject(String json, Class<T> clazz) {
-        try {
-            return OBJECT_MAPPER.readValue(json, clazz);
-        } catch (IOException e) {
-            throw new RuntimeException("Cannot convert json to object", e);
+        if (json == null || json.length() <= 0) {
+            return null;
         }
-    }
-
-    public static <T> T toObject(byte[] json, Class<T> clazz) {
         try {
             return OBJECT_MAPPER.readValue(json, clazz);
         } catch (IOException e) {

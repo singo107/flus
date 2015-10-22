@@ -21,6 +21,7 @@
 	<modules>
 		<module>flus-core</module>
 		<module>account</module>
+		<module>viewer</module>
 	</modules>
 
 	<build>
@@ -64,6 +65,11 @@
 				<version>3.2.1</version>
 			</dependency>
 			<dependency>
+				<groupId>commons-codec</groupId>
+				<artifactId>commons-codec</artifactId>
+				<version>1.10</version>
+			</dependency>
+			<dependency>
 				<groupId>commons-pool</groupId>
 				<artifactId>commons-pool</artifactId>
 				<version>1.6</version>
@@ -81,7 +87,12 @@
 			<dependency>
 				<groupId>org.apache.httpcomponents</groupId>
 				<artifactId>httpclient</artifactId>
-				<version>4.2.1</version>
+				<version>4.5.1</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.httpcomponents</groupId>
+				<artifactId>httpmime</artifactId>
+				<version>4.5.1</version>
 			</dependency>
 			<!--logging -->
 			<dependency>
@@ -117,11 +128,21 @@
 				<version>1.7.2</version>
 				<scope>runtime</scope>
 			</dependency>
-			<!--json -->
+			<!--jackson -->
 			<dependency>
-				<groupId>org.codehaus.jackson</groupId>
-				<artifactId>jackson-mapper-asl</artifactId>
-				<version>1.9.2</version>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-core</artifactId>
+				<version>2.6.3</version>
+			</dependency>
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-databind</artifactId>
+				<version>2.6.3</version>
+			</dependency>
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-annotations</artifactId>
+				<version>2.6.3</version>
 			</dependency>
 			<!-- database -->
 			<dependency>
