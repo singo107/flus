@@ -16,6 +16,8 @@
 	</context:component-scan>
 	<context:annotation-config />
 
+	<!-- 
 	<import resource="classpath:spring-mysql-config.xml" />
 	<import resource="classpath:spring-redis-config.xml" />
+	-->
 </beans>
