@@ -7,6 +7,7 @@ import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.ContentType;
@@ -23,6 +24,7 @@ import org.springframework.stereotype.Service;
 
 import cn.flus.core.utils.JsonUtils;
 import cn.flus.viewer.core.dto.FileObject;
+import cn.flus.viewer.core.dto.ProgressStatus;
 import cn.flus.viewer.core.dto.UrnKey;
 import cn.flus.viewer.core.service.AuthenticationService;
 import cn.flus.viewer.core.service.FileUploadService;
@@ -70,6 +72,65 @@ public class FileUploadServiceImpl implements FileUploadService {
 
     @Override
     public int fetchConvertProgress(String urn) {
+
+        // 获取token
+        String token = authenticationService.fetchAccessToken();
+        if (StringUtils.isBlank(token)) {
+            return 0;
+        }
+
+        // 准备Http请求
+        HttpGet httpGet = new HttpGet(apiPath + "/viewingservice/v1/" + urn + "/status");
+        httpGet.setHeader("Authorization", "Bearer " + token);
+
+        // 创建httpClient
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+        CloseableHttpResponse response = null;
+        String responseBody = null;
+
+        try {
+
+            // 发送http请求
+            response = httpClient.execute(httpGet);
+
+            // 接收返回数据
+            responseBody = EntityUtils.toString(response.getEntity());
+            logger.info(responseBody);
+
+        } catch (ClientProtocolException e) {
+
+        } catch (IOException e) {
+
+        } finally {
+            if (response != null) {
+                try {
+                    response.close();
+                } catch (IOException e) {
+                }
+            }
+        }
+
+        // 处理返回结果
+        ProgressStatus progressStatus = JsonUtils.toObject(responseBody, ProgressStatus.class);
+        if (progressStatus == null) {
+            return 0;
+        }
+
+        // 如果完成，返回进度100%
+        String progress = progressStatus.getProgress();
+        if ("complete".equalsIgnoreCase(progress)) {
+            return 100;
+        }
+
+        // 返回百分比
+        String progressPercent = null;
+        if (progress.indexOf("%") > -1) {
+            progressPercent = progress.substring(0, progress.indexOf("%"));
+        }
+        if (progressPercent != null) {
+            return Integer.parseInt(progressPercent);
+        }
+
         return 0;
     }
 

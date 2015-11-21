@@ -1,5 +1,7 @@
 package cn.flus.account.web.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +20,8 @@ import cn.flus.account.web.utils.SigninUtils;
 @RequestMapping("/")
 public class IndexController {
 
+    private static final Logger logger = LoggerFactory.getLogger(IndexController.class);
+
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView root(ModelMap model) {
         return new ModelAndView(new RedirectView("index"));
@@ -25,6 +29,7 @@ public class IndexController {
 
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public ModelAndView index(ModelMap model) {
+        logger.info("hello");
         model.addAttribute("msg", "Hello world!");
         return new ModelAndView("index");
     }

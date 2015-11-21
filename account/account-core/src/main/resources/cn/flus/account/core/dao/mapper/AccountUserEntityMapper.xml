@@ -27,19 +27,19 @@
     from account_user
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <select id="selectByLoginname" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="selectByLoginname" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
     from account_user
     where loginname = #{loginname,jdbcType=VARCHAR}
   </select>
-  <select id="selectByEmail" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="selectByEmail" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
     from account_user
     where email = #{email,jdbcType=VARCHAR}
   </select>
-  <select id="selectByMobile" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="selectByMobile" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
     from account_user

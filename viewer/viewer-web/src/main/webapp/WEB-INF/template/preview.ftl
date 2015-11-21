@@ -8,7 +8,7 @@
 <script type="text/javascript" src="${static_path}/js/jquery/jquery-1.11.1.min.js"></script>
 <script src="https://developer.api.autodesk.com/viewingservice/v1/viewers/viewer3D.min.js"></script>
 <script>
-function initialize() {
+$(function () {
 
 	var options = {
 		'document' : 'urn:${urn}',
@@ -16,40 +16,43 @@ function initialize() {
 		'getAccessToken': getToken,
 		'refreshToken': getToken,
 	};
-	
+
 	var viewerElement = document.getElementById('viewer');
+	
+	// 显示模型
 	var viewer = new Autodesk.Viewing.Viewer3D(viewerElement, {});
 	Autodesk.Viewing.Initializer(options,function() {
 		viewer.initialize();
 		loadDocument(viewer, options.document);
 	});
-}
+	
+	function getToken() {
+		return '${token}';
+	}
+	
+	function loadDocument(viewer, documentId) {
+	
+		Autodesk.Viewing.Document.load(documentId, function(doc) {
+			
+			var geometryItems = [];
+			geometryItems = Autodesk.Viewing.Document.getSubItemsWithProperties(doc.getRootItem(), {
+				'type' : 'geometry',
+				'role' : '3d'
+			}, true);
+			
+			if (geometryItems.length > 0) {
+				viewer.load(doc.getViewablePath(geometryItems[0]));
+			}
+		}, function(errorMsg) {
+			alert("Load Error: " + errorMsg);
+		});
+	}
 
-function getToken() {
-	return '${token}';
-}
-
-function loadDocument(viewer, documentId) {
-
-	Autodesk.Viewing.Document.load(documentId, function(doc) {
-		
-		var geometryItems = [];
-		geometryItems = Autodesk.Viewing.Document.getSubItemsWithProperties(doc.getRootItem(), {
-			'type' : 'geometry',
-			'role' : '3d'
-		}, true);
-		
-		if (geometryItems.length > 0) {
-			viewer.load(doc.getViewablePath(geometryItems[0]));
-		}
-	}, function(errorMsg) {
-		alert("Load Error: " + errorMsg);
-	});
-}
+});
 </script>
 </head>
 
-<body onload="initialize()">
+<body>
 	<div id="viewer" style="position:absolute; width:100%; height:100%;"></div>
 </body>
 </html>

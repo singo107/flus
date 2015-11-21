@@ -23,7 +23,7 @@
 		<property name="poolConfig" ref="jedisPoolConfig" />
 	</bean>
 
-	<bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+	<bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate" scope="prototype">
 		<property name="connectionFactory" ref="jedisFactory" />
 		<property name="keySerializer">
 			<bean class="org.springframework.data.redis.serializer.StringRedisSerializer"></bean>

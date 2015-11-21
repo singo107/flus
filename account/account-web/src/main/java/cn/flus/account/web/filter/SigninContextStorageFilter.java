@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.filter.GenericFilterBean;
 
 import cn.flus.account.core.dto.SigninUser;
-import cn.flus.account.core.service.SigninUserService;
 import cn.flus.account.web.utils.SignExecutor;
 
 /**
@@ -27,14 +26,11 @@ public class SigninContextStorageFilter extends GenericFilterBean {
     private static final String FILTER_APPLIED = SigninContextStorageFilter.class.getName() + ".applied";
 
     @Autowired
-    private SigninUserService   signinUserService;
-
-    @Autowired
-    private SignExecutor      signinExecutor;
+    private SignExecutor        signinExecutor;
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException,
-                                                                                             ServletException {
+                                                                                              ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         if (httpRequest.getAttribute(FILTER_APPLIED) != null) {
             chain.doFilter(request, response);

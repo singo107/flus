@@ -13,6 +13,7 @@
 
 	<!-- 
 	<import resource="classpath:test-spring-mysql-config.xml" />
-	<import resource="classpath:test-spring-redis-config.xml" />
 	-->
+	<import resource="classpath:test-spring-redis-config.xml" />
+	
 </beans>

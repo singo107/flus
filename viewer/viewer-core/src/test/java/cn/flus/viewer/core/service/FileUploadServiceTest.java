@@ -29,14 +29,45 @@ public class FileUploadServiceTest {
     }
 
     @Test
-    public void test() {
+    public void test1() {
 
-        File file = new File("e:\\tmp\\6.rvt");
+        File file = new File("e:\\tmp\\01.nwd");
         FileInputStream f = null;
         try {
+
             f = new FileInputStream(file);
             String urn = fileUploadService.uploadAndConvert(f, file.getName());
             System.out.println(urn);
+
+            fileUploadService.fetchConvertProgress(urn);
+
+            try {
+                Thread.sleep(2 * 1000);
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+            fileUploadService.fetchConvertProgress(urn);
+
+            try {
+                Thread.sleep(2 * 1000);
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+            fileUploadService.fetchConvertProgress(urn);
+
+            try {
+                Thread.sleep(2 * 1000);
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+            fileUploadService.fetchConvertProgress(urn);
+
         } catch (FileNotFoundException e) {
         } finally {
             if (f != null) {
@@ -46,5 +77,12 @@ public class FileUploadServiceTest {
                 }
             }
         }
+    }
+
+    // @Test
+    public void test2() {
+        String urn = "dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6c2luZ28vMTIucnZ0";
+        int progress = fileUploadService.fetchConvertProgress(urn);
+        System.out.println(progress);
     }
 }

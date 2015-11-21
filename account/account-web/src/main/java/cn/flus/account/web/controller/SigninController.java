@@ -15,7 +15,6 @@ import org.springframework.web.servlet.view.RedirectView;
 import cn.flus.account.core.dao.domain.AccountUserEntity;
 import cn.flus.account.core.exceptions.ExceedMaxValidateException;
 import cn.flus.account.core.service.AccountUserService;
-import cn.flus.account.core.service.CaptchaService;
 import cn.flus.account.web.utils.SignExecutor;
 
 /**
@@ -29,9 +28,6 @@ public class SigninController {
 
     @Autowired
     private AccountUserService accountUserService;
-
-    @Autowired
-    private CaptchaService     captchaService;
 
     @Autowired
     private SignExecutor       signinExecutor;
@@ -63,7 +59,7 @@ public class SigninController {
             match = accountUserService.checkPassword(accountUserEntity, password);
         } catch (ExceedMaxValidateException e) {
 
-            // 超过最大校验次数，账号冻结30分钟
+            // 超过最大校验次数，账号冻结
             return new ModelAndView(new RedirectView("signin?error=freeze"));
         }
         if (!match) {

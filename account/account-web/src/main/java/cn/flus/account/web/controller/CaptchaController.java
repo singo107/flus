@@ -46,6 +46,7 @@ public class CaptchaController {
             servletOutputStream = response.getOutputStream();
             IOUtils.write(captchaBytes, servletOutputStream);
         } catch (IOException e) {
+            // ignore
         }
     }
 
