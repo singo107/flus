@@ -21,7 +21,7 @@
 				<div class="signin_inline clr">
 					<div class="f-l">
 						<label class="checkbox">
-                            <input type="checkbox" name="rememberMe">
+                            <input type="checkbox" name="rememberMe" value="true">
 							一个月内自动登录
                         </label>
 					</div>

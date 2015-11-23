@@ -4,7 +4,7 @@ import cn.flus.account.core.dto.SigninUser;
 import cn.flus.account.web.filter.SigninContextHolder;
 
 /**
- * 获取当前登录的用户
+ * 当前登录的用户的工具类
  * 
  * @author singo
  */
@@ -18,4 +18,14 @@ public class SigninUtils {
     public static SigninUser get() {
         return SigninContextHolder.getContext().getSigninUser();
     }
+
+    /**
+     * 判断用户是否已经登录成功
+     * 
+     * @return
+     */
+    public static boolean isSignin() {
+        return (get() != null);
+    }
+
 }

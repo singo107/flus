@@ -44,6 +44,7 @@ public class SigninController {
     @RequestMapping(value = "/signin", method = RequestMethod.POST)
     public ModelAndView signinPagePost(@RequestParam(value = "loginname", required = true) String loginname,
                                        @RequestParam(value = "password", required = true) String password,
+                                       @RequestParam(value = "rememberMe", required = false) String rememberMe,
                                        @RequestParam(value = "dest", required = false) String dest, ModelMap model,
                                        HttpServletRequest request, HttpServletResponse response) {
 
@@ -70,6 +71,13 @@ public class SigninController {
 
         // 登录，记录会话
         signinExecutor.signin(accountUserEntity, response);
+
+        // 记住登录状态，30天
+        if (rememberMe != null && rememberMe.length() > 0) {
+            signinExecutor.rememberMe(accountUserEntity, response, 30);
+        } else {
+            signinExecutor.rememberMe(accountUserEntity, response, 0);
+        }
 
         // 跳转
         String redirectUrl = null;
