@@ -1,5 +1,7 @@
 package cn.flus.account.web.utils;
 
+import java.util.Calendar;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -126,16 +128,26 @@ public class SignExecutor {
      * 
      * @param user
      * @param response
-     * @param days
+     * @param month
      */
-    public void rememberMe(AccountUserEntity user, HttpServletResponse response, int days) {
+    public void rememberMe(AccountUserEntity user, HttpServletResponse response, int month) {
+
+        // 计算过期时间
+        long current = System.currentTimeMillis();
+        Calendar c = Calendar.getInstance();
+        c.setTimeInMillis(current);
+        c.add(Calendar.MONTH, month);
+        long expireTime = c.getTimeInMillis();
+        int expiry = (int) ((expireTime - current) / 1000);
 
         // 计算签名
-        String signature = makeTokenSignature(user.getId(), user.getPassword());
+        String signature = makeTokenSignature(user.getId(), expireTime, user.getPassword());
 
         // 拼装cookie
         StringBuilder sb = new StringBuilder();
         sb.append(user.getId());
+        sb.append(":");
+        sb.append(expireTime);
         sb.append(":");
         sb.append(signature);
         String cookieValue = new String(Base64.encodeBase64(sb.toString().getBytes()));
@@ -144,7 +156,7 @@ public class SignExecutor {
         Cookie rememberMeCookie = new Cookie(REMEMBER_ME_CK_NAME, cookieValue);
         rememberMeCookie.setDomain(signinDomain);
         rememberMeCookie.setPath("/");
-        rememberMeCookie.setMaxAge(days * 24 * 3600);
+        rememberMeCookie.setMaxAge(expiry);
         response.addCookie(rememberMeCookie);
     }
 
@@ -170,9 +182,17 @@ public class SignExecutor {
             return null;
         }
 
+        // 取出过期时间
+        String strExpireTime = cookieTokens[1];
+        long expireTime = Long.parseLong(strExpireTime);
+        if (expireTime < System.currentTimeMillis()) {
+            logger.warn("remember me cookie invalid: user(" + cookieTokens[0] + ") expired.");
+            return null;
+        }
+
         // 验签
-        String expectedTokenSignature = makeTokenSignature(user.getId(), user.getPassword());
-        if (!cookieTokens[1].equals(expectedTokenSignature)) {
+        String expectedTokenSignature = makeTokenSignature(user.getId(), expireTime, user.getPassword());
+        if (!cookieTokens[2].equals(expectedTokenSignature)) {
             logger.warn("remember me cookie invalid: user(" + cookieTokens[0] + ") signature error.");
             return null;
         }
@@ -180,8 +200,8 @@ public class SignExecutor {
         return user;
     }
 
-    private String makeTokenSignature(int id, String password) {
-        String data = id + ":" + password;
+    private String makeTokenSignature(int id, long expireTime, String password) {
+        String data = id + ":" + expireTime + ":" + password;
         return DigestUtils.md5Hex(data.getBytes());
     }
 
@@ -200,7 +220,7 @@ public class SignExecutor {
             return null;
         }
         String[] cookieTokens = cookieAsPlainText.split(":");
-        if (cookieTokens == null || cookieTokens.length != 2) {
+        if (cookieTokens == null || cookieTokens.length != 3) {
             return null;
         }
         return cookieTokens;

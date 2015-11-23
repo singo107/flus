@@ -72,9 +72,9 @@ public class SigninController {
         // 登录，记录会话
         signinExecutor.signin(accountUserEntity, response);
 
-        // 记住登录状态，30天
+        // 记住登录状态，1个月
         if (rememberMe != null && rememberMe.length() > 0) {
-            signinExecutor.rememberMe(accountUserEntity, response, 30);
+            signinExecutor.rememberMe(accountUserEntity, response, 1);
         } else {
             signinExecutor.rememberMe(accountUserEntity, response, 0);
         }
