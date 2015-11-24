@@ -9,6 +9,6 @@
 
 <body>
 	${user}<br />
-	<a href="${rc.getContextPath()}/signout">退出</a>
+	<a href="signout">退出</a>
 </body>
 </html>
